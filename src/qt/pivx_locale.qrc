@@ -1,0 +1,36 @@
+<!DOCTYPE RCC><RCC version="1.0">
+    <qresource prefix="/translations">
+        <file alias="bg">locale/gea_bg.qm</file>
+        <file alias="ca">locale/gea_ca.qm</file>
+        <file alias="cs">locale/gea_cs.qm</file>
+        <file alias="da">locale/gea_da.qm</file>
+        <file alias="de">locale/gea_de.qm</file>
+        <file alias="en">locale/gea_en.qm</file>
+        <file alias="en_US">locale/gea_en_US.qm</file>
+        <file alias="eo">locale/gea_eo.qm</file>
+        <file alias="es">locale/gea_es.qm</file>
+        <file alias="es_ES">locale/gea_es_ES.qm</file>
+        <file alias="fi">locale/gea_fi.qm</file>
+        <file alias="fr_FR">locale/gea_fr_FR.qm</file>
+        <file alias="hi_IN">locale/gea_hi_IN.qm</file>
+        <file alias="hr">locale/gea_hr.qm</file>
+        <file alias="hr_HR">locale/gea_hr_HR.qm</file>
+        <file alias="it">locale/gea_it.qm</file>
+        <file alias="ja">locale/gea_ja.qm</file>
+        <file alias="ko_KR">locale/gea_ko_KR.qm</file>
+        <file alias="lt_LT">locale/gea_lt_LT.qm</file>
+        <file alias="nl">locale/gea_nl.qm</file>
+        <file alias="pl">locale/gea_pl.qm</file>
+        <file alias="pt">locale/gea_pt.qm</file>
+        <file alias="pt_BR">locale/gea_pt_BR.qm</file>
+        <file alias="ro_RO">locale/gea_ro_RO.qm</file>
+        <file alias="ru">locale/gea_ru.qm</file>
+        <file alias="sk">locale/gea_sk.qm</file>
+        <file alias="sv">locale/gea_sv.qm</file>
+        <file alias="tr">locale/gea_tr.qm</file>
+        <file alias="uk">locale/gea_uk.qm</file>
+        <file alias="vi">locale/gea_vi.qm</file>
+        <file alias="zh_CN">locale/gea_zh_CN.qm</file>
+        <file alias="zh_TW">locale/gea_zh_TW.qm</file>
+    </qresource>
+</RCC>

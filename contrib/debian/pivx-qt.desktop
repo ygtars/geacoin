@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=GEA
+Comment=GEA P2P Cryptocurrency
+Comment[fr]=GEA, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=GEA, eşten eşe kriptografik sanal para birimi
+Exec=gea-qt %u
+Terminal=false
+Type=Application
+Icon=gea128
+MimeType=x-scheme-handler/gea;
+Categories=Office;Finance;
