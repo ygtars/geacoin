@@ -1,5 +1,5 @@
 // Copyright (c) 2014 The Bitcoin developers
-// Copyright (c) 2017 The GEA developers
+// Copyright (c) 2017 The PIVX developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -11,7 +11,7 @@
 
 /**
  * CBaseChainParams defines the base parameters (shared between gea-cli and gead)
- * of a given instance of the Geax system.
+ * of a given instance of the GEA system.
  */
 class CBaseChainParams
 {

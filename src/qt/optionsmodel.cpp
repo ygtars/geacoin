@@ -1,6 +1,6 @@
 // Copyright (c) 2011-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2018 The GEA developers
+// Copyright (c) 2015-2018 The PIVX developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -73,30 +73,26 @@ void OptionsModel::Init()
         settings.setValue("fHideZeroBalances", true);
     fHideZeroBalances = settings.value("fHideZeroBalances").toBool();
 
-    if (!settings.contains("fHideOrphans"))
-        settings.setValue("fHideOrphans", false);
-    fHideOrphans = settings.value("fHideOrphans").toBool();
-
     if (!settings.contains("fCoinControlFeatures"))
         settings.setValue("fCoinControlFeatures", false);
     fCoinControlFeatures = settings.value("fCoinControlFeatures", false).toBool();
 
     if (!settings.contains("fZeromintEnable"))
-        settings.setValue("fZeromintEnable", true);
+        settings.setValue("fZeromintEnable", false);
     fEnableZeromint = settings.value("fZeromintEnable").toBool();
 
     if (!settings.contains("nZeromintPercentage"))
-        settings.setValue("nZeromintPercentage", 10);
+        settings.setValue("nZeromintPercentage", 0);
     nZeromintPercentage = settings.value("nZeromintPercentage").toLongLong();
 
     if (!settings.contains("nPreferredDenom"))
         settings.setValue("nPreferredDenom", 0);
     nPreferredDenom = settings.value("nPreferredDenom", "0").toLongLong();
 
-    if (!settings.contains("nAnonymizeGeaxAmount"))
-        settings.setValue("nAnonymizeGeaxAmount", 1000);
+    if (!settings.contains("nAnonymizeGEAAmount"))
+        settings.setValue("nAnonymizeGEAAmount", 1000);
 
-    nAnonymizeGeaxAmount = settings.value("nAnonymizeGeaxAmount").toLongLong();
+    nAnonymizeGEAAmount = settings.value("nAnonymizeGEAAmount").toLongLong();
 
     if (!settings.contains("fShowMasternodesTab"))
         settings.setValue("fShowMasternodesTab", masternodeConfig.getCount());
@@ -170,8 +166,8 @@ void OptionsModel::Init()
         SoftSetArg("-zeromintpercentage", settings.value("nZeromintPercentage").toString().toStdString());
     if (settings.contains("nPreferredDenom"))
         SoftSetArg("-preferredDenom", settings.value("nPreferredDenom").toString().toStdString());
-    if (settings.contains("nAnonymizeGeaxAmount"))
-        SoftSetArg("-anonymizegeaamount", settings.value("nAnonymizeGeaxAmount").toString().toStdString());
+    if (settings.contains("nAnonymizeGEAAmount"))
+        SoftSetArg("-anonymizegeaamount", settings.value("nAnonymizeGEAAmount").toString().toStdString());
 
     language = settings.value("language").toString();
 }
@@ -256,16 +252,14 @@ QVariant OptionsModel::data(const QModelIndex& index, int role) const
             return settings.value("nThreadsScriptVerif");
         case HideZeroBalances:
             return settings.value("fHideZeroBalances");
-        case HideOrphans:
-            return settings.value("fHideOrphans");
         case ZeromintEnable:
             return QVariant(fEnableZeromint);
         case ZeromintPercentage:
             return QVariant(nZeromintPercentage);
         case ZeromintPrefDenom:
             return QVariant(nPreferredDenom);
-        case AnonymizeGeaxAmount:
-            return QVariant(nAnonymizeGeaxAmount);
+        case AnonymizeGEAAmount:
+            return QVariant(nAnonymizeGEAAmount);
         case Listen:
             return settings.value("fListen");
         default:
@@ -393,15 +387,11 @@ bool OptionsModel::setData(const QModelIndex& index, const QVariant& value, int 
             settings.setValue("fHideZeroBalances", fHideZeroBalances);
             emit hideZeroBalancesChanged(fHideZeroBalances);
             break;
-        case HideOrphans:
-            fHideOrphans = value.toBool();
-            settings.setValue("fHideOrphans", fHideOrphans);
-            emit hideOrphansChanged(fHideOrphans);
-            break;
-        case AnonymizeGeaxAmount:
-            nAnonymizeGeaxAmount = value.toInt();
-            settings.setValue("nAnonymizeGeaxAmount", nAnonymizeGeaxAmount);
-            emit anonymizeGeaxAmountChanged(nAnonymizeGeaxAmount);
+
+        case AnonymizeGEAAmount:
+            nAnonymizeGEAAmount = value.toInt();
+            settings.setValue("nAnonymizeGEAAmount", nAnonymizeGEAAmount);
+            emit anonymizeGEAAmountChanged(nAnonymizeGEAAmount);
             break;
         case CoinControlFeatures:
             fCoinControlFeatures = value.toBool();

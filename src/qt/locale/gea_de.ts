@@ -2920,7 +2920,7 @@ Maximal erlaubt:</translation>
         <translation>Keine "Pay To"-Adresse zur Verfügung. Erstelle lokale Zahlung</translation>
     </message>
     <message>
-        <source>Invalid Geax Address</source>
+        <source>Invalid GEA Address</source>
         <translation>Ungültige GEA-Adresse </translation>
     </message>
     <message>
@@ -5137,8 +5137,8 @@ Präge entweder höhere Stückelungen (damit weniger Eingaben benötigt werdenn)
         <translation>Sie müssen einen privaten Masternode-Schlüssel in der Konfiguration festlegen. Bitte nutzen Sie die Dokumentation zwecks Hilfe.</translation>
     </message>
     <message>
-        <source>(51472 could be used only on mainnet)</source>
-        <translation>(51472 kann nur im Mainnet verwendet werden)</translation>
+        <source>(9229 could be used only on mainnet)</source>
+        <translation>(9229 kann nur im Mainnet verwendet werden)</translation>
     </message>
     <message>
         <source>(default: %s)</source>
@@ -5149,8 +5149,8 @@ Präge entweder höhere Stückelungen (damit weniger Eingaben benötigt werdenn)
         <translation>(default: 1)</translation>
     </message>
     <message>
-        <source>(must be 51472 for mainnet)</source>
-        <translation>(muss im Mainnet 51472 sein)</translation>
+        <source>(must be 9229 for mainnet)</source>
+        <translation>(muss im Mainnet 9229 sein)</translation>
     </message>
     <message>
         <source>Accept command line and JSON-RPC commands</source>

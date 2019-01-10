@@ -1,6 +1,6 @@
 // Copyright (c) 2011-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2018 The GEA developers
+// Copyright (c) 2015-2018 The PIVX developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -59,6 +59,17 @@ public:
         qint64 amount = index.data(TransactionTableModel::AmountRole).toLongLong();
         bool confirmed = index.data(TransactionTableModel::ConfirmedRole).toBool();
 
+        // Check transaction status
+        int nStatus = index.data(TransactionTableModel::StatusRole).toInt();
+        bool fConflicted = false;
+        if (nStatus == TransactionStatus::Conflicted || nStatus == TransactionStatus::NotAccepted) {
+            fConflicted = true; // Most probably orphaned, but could have other reasons as well
+        }
+        bool fImmature = false;
+        if (nStatus == TransactionStatus::Immature) {
+            fImmature = true;
+        }
+
         QVariant value = index.data(Qt::ForegroundRole);
         QColor foreground = COLOR_BLACK;
         if (value.canConvert<QBrush>()) {
@@ -76,9 +87,15 @@ public:
             iconWatchonly.paint(painter, watchonlyRect);
         }
 
-        if (amount < 0)
+        if(fConflicted) { // No need to check anything else for conflicted transactions
+            foreground = COLOR_CONFLICTED;
+        } else if (!confirmed || fImmature) {
+            foreground = COLOR_UNCONFIRMED;
+        } else if (amount < 0) {
             foreground = COLOR_NEGATIVE;
-
+        } else {
+            foreground = COLOR_BLACK;
+        }
         painter->setPen(foreground);
         QString amountText = BitcoinUnits::formatWithUnit(unit, amount, true, BitcoinUnits::separatorAlways);
         if (!confirmed) {
@@ -131,6 +148,11 @@ OverviewPage::OverviewPage(QWidget* parent) : QWidget(parent),
     // init "out of sync" warning labels
     ui->labelWalletStatus->setText("(" + tr("out of sync") + ")");
     ui->labelTransactionsStatus->setText("(" + tr("out of sync") + ")");
+
+    // Disable Zerocoin Frame
+    ui->frame_ZerocoinBalances->hide();
+
+    SetLinks();
 
     // start with displaying the "out of sync" warnings
     showOutOfSyncWarning(true);
@@ -242,8 +264,8 @@ void OverviewPage::setBalance(const CAmount& balance, const CAmount& unconfirmed
 
     // Adjust bubble-help according to AutoMint settings
     QString automintHelp = tr("Current percentage of zGEA.\nIf AutoMint is enabled this percentage will settle around the configured AutoMint percentage (default = 10%).\n");
-    bool fEnableZeromint = GetBoolArg("-enablezeromint", true);
-    int nZeromintPercentage = GetArg("-zeromintpercentage", 10);
+    bool fEnableZeromint = GetBoolArg("-enablezeromint", false);
+    int nZeromintPercentage = GetArg("-zeromintpercentage", 0);
     if (fEnableZeromint) {
         automintHelp += tr("AutoMint is currently enabled and set to ") + QString::number(nZeromintPercentage) + "%.\n";
         automintHelp += tr("To disable AutoMint add 'enablezeromint=0' in gea.conf.");
@@ -267,20 +289,20 @@ void OverviewPage::setBalance(const CAmount& balance, const CAmount& unconfirmed
     bool showWatchOnlyGEAAvailable = showGEAAvailable || nAvailableWatchBalance != nTotalWatchBalance;
     ui->labelBalanceText->setVisible(showGEAAvailable || showWatchOnlyGEAAvailable);
     ui->labelBalance->setVisible(showGEAAvailable || showWatchOnlyGEAAvailable);
-    ui->labelWatchAvailable->setVisible(showWatchOnlyGEAAvailable && showWatchOnly);
+    ui->labelWatchAvailable->setVisible(showGEAAvailable && showWatchOnly);
 
     // GEA Pending
     bool showGEAPending = settingShowAllBalances || unconfirmedBalance != 0;
     bool showWatchOnlyGEAPending = showGEAPending || watchUnconfBalance != 0;
     ui->labelPendingText->setVisible(showGEAPending || showWatchOnlyGEAPending);
     ui->labelUnconfirmed->setVisible(showGEAPending || showWatchOnlyGEAPending);
-    ui->labelWatchPending->setVisible(showWatchOnlyGEAPending && showWatchOnly);
+    ui->labelWatchPending->setVisible(showGEAPending && showWatchOnly);
 
     // GEA Immature
-    bool showGEAImmature = settingShowAllBalances || immatureBalance != 0;
-    bool showWatchOnlyImmature = showGEAImmature || watchImmatureBalance != 0;
-    ui->labelImmatureText->setVisible(showGEAImmature || showWatchOnlyImmature);
-    ui->labelImmature->setVisible(showGEAImmature || showWatchOnlyImmature); // for symmetry reasons also show immature label when the watch-only one is shown
+    bool showImmature = settingShowAllBalances || immatureBalance != 0;
+    bool showWatchOnlyImmature = showImmature || watchImmatureBalance != 0;
+    ui->labelImmatureText->setVisible(showImmature || showWatchOnlyImmature);
+    ui->labelImmature->setVisible(showImmature || showWatchOnlyImmature); // for symmetry reasons also show immature label when the watch-only one is shown
     ui->labelWatchImmature->setVisible(showWatchOnlyImmature && showWatchOnly); // show watch-only immature balance
 
     // GEA Locked
@@ -288,7 +310,7 @@ void OverviewPage::setBalance(const CAmount& balance, const CAmount& unconfirmed
     bool showWatchOnlyGEALocked = showGEALocked || nWatchOnlyLockedBalance != 0;
     ui->labelLockedBalanceText->setVisible(showGEALocked || showWatchOnlyGEALocked);
     ui->labelLockedBalance->setVisible(showGEALocked || showWatchOnlyGEALocked);
-    ui->labelWatchLocked->setVisible(showWatchOnlyGEALocked && showWatchOnly);
+    ui->labelWatchLocked->setVisible(showGEALocked && showWatchOnly);
 
     // zGEA
     bool showzGEAAvailable = settingShowAllBalances || zerocoinBalance != matureZerocoinBalance;
@@ -370,7 +392,6 @@ void OverviewPage::setWalletModel(WalletModel* model)
 
         connect(model->getOptionsModel(), SIGNAL(displayUnitChanged(int)), this, SLOT(updateDisplayUnit()));
         connect(model->getOptionsModel(), SIGNAL(hideZeroBalancesChanged(bool)), this, SLOT(updateDisplayUnit()));
-        connect(model->getOptionsModel(), SIGNAL(hideOrphansChanged(bool)), this, SLOT(hideOrphans(bool)));
 
         updateWatchOnlyLabels(model->haveWatchOnly());
         connect(model, SIGNAL(notifyWatchonlyChanged(bool)), this, SLOT(updateWatchOnlyLabels(bool)));
@@ -378,10 +399,6 @@ void OverviewPage::setWalletModel(WalletModel* model)
 
     // update the display unit, to not use the default ("GEA")
     updateDisplayUnit();
-
-    // Hide orphans
-    QSettings settings;
-    hideOrphans(settings.value("fHideOrphans", false).toBool());
 }
 
 void OverviewPage::updateDisplayUnit()
@@ -411,8 +428,19 @@ void OverviewPage::showOutOfSyncWarning(bool fShow)
     ui->labelTransactionsStatus->setVisible(fShow);
 }
 
-void OverviewPage::hideOrphans(bool fHide)
+void OverviewPage::SetLinks()
 {
-    if (filter)
-        filter->setHideOrphans(fHide);
+    ui->labelLinks1->setText("Website:");
+    ui->labelLinks2->setText("Review:");
+    ui->labelLinks3->setText("Block Explorer:");
+    ui->labelLinks4->setText("Discord:");
+    ui->labelLinks5->setText("Twitter:");
+    ui->labelLinks6->setText("Github:");
+
+    ui->labelLinksUrl1->setText("<a href=\"https://geacoin.io\">https://geacoin.io</a>");
+    ui->labelLinksUrl2->setText("<a href=\"https://review.geacoin.io\">https://review.geacoin.io</a>");
+    ui->labelLinksUrl3->setText("<a href=\"https://explorer.geacoin.io\">https://explorer.geacoin.io</a>");
+    ui->labelLinksUrl4->setText("<a href=\"https://discord.gg/xjXpxqP\">https://discord.gg/xjXpxqP</a>");
+    ui->labelLinksUrl5->setText("<a href=\"https://twitter.com/GEAcoin\">https://twitter.com/GEAcoin</a>");
+    ui->labelLinksUrl6->setText("<a href=\"https://github.com/geacoin\">https://github.com/geacoin</a>");
 }

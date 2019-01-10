@@ -831,7 +831,7 @@ Adresse: %4
     <message>
         <source>Staking is active
  MultiSend: %1</source>
-        <translation>"Indskydning af saldo" aktiveret
+        <translation>"Indsgeaning af saldo" aktiveret
 "Multisend": %1</translation>
     </message>
     <message>
@@ -845,7 +845,7 @@ Adresse: %4
     <message>
         <source>Staking is not active
  MultiSend: %1</source>
-        <translation>"Indskydning af saldo" ikke aktiveret
+        <translation>"Indsgeaning af saldo" ikke aktiveret
 "Multisend": %1</translation>
     </message>
     <message>
@@ -2148,7 +2148,7 @@ https://www.transifex.com/gea-project/gea-project-translations</translation>
     </message>
     <message>
         <source>Staked or masternode rewards that has not yet matured</source>
-        <translation>Indskyder- eller masternodebelønning er stadig under behandling</translation>
+        <translation>Indsgeaer- eller masternodebelønning er stadig under behandling</translation>
     </message>
     <message>
         <source>Current locked balance in watch-only addresses</source>
@@ -2196,7 +2196,7 @@ Uplettet: bekræftet, men mindre end 1 minutter med samme betegnelse, efter at d
     </message>
     <message>
         <source>Staked or masternode rewards in watch-only addresses that has not yet matured</source>
-        <translation>Indskyder- eller masternodebelønning for "vis kun" adresser er stadig under behandling</translation>
+        <translation>Indsgeaer- eller masternodebelønning for "vis kun" adresser er stadig under behandling</translation>
     </message>
     <message>
         <source>Total:</source>
@@ -2737,7 +2737,7 @@ For at ændre procentdelen (ingen genstart kræves):.
     </message>
     <message>
         <source>If this is activated, but the change address is empty or invalid, change will be sent to a newly generated address.</source>
-        <translation>Hvis denne er aktiveret, men tilbagebetalingsadressen er tom, eller ugyldig, overskydende beløb vil blive fremsendt til en nyoprettet adresse</translation>
+        <translation>Hvis denne er aktiveret, men tilbagebetalingsadressen er tom, eller ugyldig, oversgeaende beløb vil blive fremsendt til en nyoprettet adresse</translation>
     </message>
     <message>
         <source>Custom change address</source>
@@ -2928,7 +2928,7 @@ Maksimum tilladt:</translation>
         <translation>Ingen 'Betal til' adresse, der er oprettet, skaber lokal betaling</translation>
     </message>
     <message>
-        <source>Invalid Geax Address</source>
+        <source>Invalid GEA Address</source>
         <translation> Ugyldig GEA adresse</translation>
     </message>
     <message>
@@ -3297,7 +3297,7 @@ Enten mint højere nomineringer (så færre input er nødvendige) eller reducere
     </message>
     <message>
         <source>Time Offset</source>
-        <translation>Tidsforskydning</translation>
+        <translation>Tidsforsgeaning</translation>
     </message>
     <message>
         <source>Custom Backup Path:</source>
@@ -3729,7 +3729,7 @@ Enten mint højere nomineringer (så færre input er nødvendige) eller reducere
     </message>
     <message>
         <source>If this is activated, but the change address is empty or invalid, change will be sent to a newly generated address.</source>
-        <translation>Hvis denne er aktiveret, men tilbagebetalingsadressen er tom, eller ugyldig, overskydende beløb vil blive fremsendt til en nyoprettet adresse</translation>
+        <translation>Hvis denne er aktiveret, men tilbagebetalingsadressen er tom, eller ugyldig, oversgeaende beløb vil blive fremsendt til en nyoprettet adresse</translation>
     </message>
     <message>
         <source>Custom change address</source>
@@ -5146,8 +5146,8 @@ Enten mint højere nomineringer (så færre input er nødvendige) eller reducere
         <translation>Der skal angives en masternodeprivkey i konfigurationen. For mere information, se i dokumentationen.</translation>
     </message>
     <message>
-        <source>(51472 could be used only on mainnet)</source>
-        <translation>(51472 kunne kun bruges på hovednettet)</translation>
+        <source>(9229 could be used only on mainnet)</source>
+        <translation>(9229 kunne kun bruges på hovednettet)</translation>
     </message>
     <message>
         <source>(default: %s)</source>
@@ -5158,8 +5158,8 @@ Enten mint højere nomineringer (så færre input er nødvendige) eller reducere
         <translation>(default: 1)</translation>
     </message>
     <message>
-        <source>(must be 51472 for mainnet)</source>
-        <translation>(skal være 51472 for hovednettet)</translation>
+        <source>(must be 9229 for mainnet)</source>
+        <translation>(skal være 9229 for hovednettet)</translation>
     </message>
     <message>
         <source>Accept command line and JSON-RPC commands</source>

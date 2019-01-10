@@ -255,7 +255,7 @@
     </message>
     <message>
         <source>Enter a GEA Address that you would like to encrypt using BIP 38. Enter a passphrase in the middle box. Press encrypt to compute the encrypted private key.</source>
-        <translation>Въведете Geax адрес, който искате да криптиране с BIP 38. Въведете парола в средното поле. Натиснете 'криптирай', за да се изчисли криптирания таен ключ. </translation>
+        <translation>Въведете GEA адрес, който искате да криптиране с BIP 38. Въведете парола в средното поле. Натиснете 'криптирай', за да се изчисли криптирания таен ключ. </translation>
     </message>
     <message>
         <source>The GEA address to encrypt</source>
@@ -2917,7 +2917,7 @@ Maximum allowed: </source>
         <translation>Без 'Плати На' адрес, плащането е локално</translation>
     </message>
     <message>
-        <source>Invalid Geax Address</source>
+        <source>Invalid GEA Address</source>
         <translation>Невалиден GEA адрес</translation>
     </message>
     <message>
@@ -5130,8 +5130,8 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation>Трябва да зададете masternodeprivkey в конфигурационния файл. Консултирайте се с документацията за повече помощ.</translation>
     </message>
     <message>
-        <source>(51472 could be used only on mainnet)</source>
-        <translation>(51472 може да се ползва само в mainnet)</translation>
+        <source>(9229 could be used only on mainnet)</source>
+        <translation>(9229 може да се ползва само в mainnet)</translation>
     </message>
     <message>
         <source>(default: %s)</source>
@@ -5142,8 +5142,8 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation>(по подразбиране: 1)</translation>
     </message>
     <message>
-        <source>(must be 51472 for mainnet)</source>
-        <translation>(трябва да е 51472 за mainnet)</translation>
+        <source>(must be 9229 for mainnet)</source>
+        <translation>(трябва да е 9229 за mainnet)</translation>
     </message>
     <message>
         <source>Accept command line and JSON-RPC commands</source>

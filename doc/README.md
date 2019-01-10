@@ -3,7 +3,7 @@ GEA Core
 
 Setup
 ---------------------
-[GEA Core](http://gea.org/wallet) is the original GEA client and it builds the backbone of the network. However, it downloads and stores the entire history of GEA transactions; depending on the speed of your computer and network connection, the synchronization process can take anywhere from a few hours to a day or more. Thankfully you only have to do this once.
+[GEA Core](http://geacoin.io) is the original GEA client and it builds the backbone of the network. However, it downloads and stores the entire history of GEA transactions; depending on the speed of your computer and network connection, the synchronization process can take anywhere from a few hours to a day or more. Thankfully you only have to do this once.
 
 Running
 ---------------------
@@ -26,11 +26,7 @@ Drag GEA-Qt to your applications folder, and then run GEA-Qt.
 
 ### Need Help?
 
-* See the documentation at the [GEA Wiki](https://en.bitcoin.it/wiki/Main_Page) ***TODO***
-for help and more information.
-* Ask for help on [BitcoinTalk](https://bitcointalk.org/index.php?topic=1262920.0) or on the [GEA Forum](http://forum.gea.org/).
-* Join our Discord server [Discord Server](https://discord.gea.org)
-* Join one of our Slack groups [GEA Slack Groups](https://gea.org/slack-logins/) (Main community is replaced by Discord).
+* Join the [GEA Discord Channel](https://discord.gg/zQMrU3s)
 
 Building
 ---------------------
@@ -38,32 +34,13 @@ The following are developer notes on how to build GEA on your native platform. T
 
 - [OSX Build Notes](build-osx.md)
 - [Unix Build Notes](build-unix.md)
-- [Gitian Building Guide](gitian-building.md)
-
-Development
----------------------
-The Geax repo's [root README](https://github.com/GEA-Project/GEA/blob/master/README.md) contains relevant information on the development process and automated testing.
-
-- [Developer Notes](developer-notes.md)
-- [Multiwallet Qt Development](multiwallet-qt.md)
-- [Release Notes](release-notes.md)
-- [Release Process](release-process.md)
-- [Source Code Documentation (External Link)](https://dev.visucore.com/bitcoin/doxygen/) ***TODO***
-- [Translation Process](translation_process.md)
-- [Unit Tests](unit-tests.md)
-- [Unauthenticated REST Interface](REST-interface.md)
-- [Dnsseed Policy](dnsseed-policy.md)
 
 ### Resources
 
-* Discuss on the [BitcoinTalk](https://bitcointalk.org/index.php?topic=1262920.0) or the [GEA](http://forum.gea.org/) forum.
-* Join the [GEA-Dev](https://gea-dev.slack.com/) Slack group ([Sign-Up](https://gea-dev.herokuapp.com/)).
+* Join the [GEA Discord Channel](https://discord.gg/uMHKEm2)
 
 ### Miscellaneous
 - [Assets Attribution](assets-attribution.md)
-- [Files](files.md)
-- [Tor Support](tor.md)
-- [Init Scripts (systemd/upstart/openrc)](init.md)
 
 License
 ---------------------

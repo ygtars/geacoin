@@ -1,7 +1,7 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2018 The GEA developers
+// Copyright (c) 2015-2018 The PIVX developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -253,13 +253,23 @@ bool CWallet::LoadMultiSig(const CScript& dest)
 
 bool CWallet::Unlock(const SecureString& strWalletPassphrase, bool anonymizeOnly)
 {
+    SecureString strWalletPassphraseFinal;
+
+    if (!IsLocked()) {
+        fWalletUnlockAnonymizeOnly = anonymizeOnly;
+        return true;
+    }
+
+    strWalletPassphraseFinal = strWalletPassphrase;
+
+
     CCrypter crypter;
     CKeyingMaterial vMasterKey;
 
     {
         LOCK(cs_wallet);
         BOOST_FOREACH (const MasterKeyMap::value_type& pMasterKey, mapMasterKeys) {
-            if (!crypter.SetKeyFromPassphrase(strWalletPassphrase, pMasterKey.second.vchSalt, pMasterKey.second.nDeriveIterations, pMasterKey.second.nDerivationMethod))
+            if (!crypter.SetKeyFromPassphrase(strWalletPassphraseFinal, pMasterKey.second.vchSalt, pMasterKey.second.nDeriveIterations, pMasterKey.second.nDerivationMethod))
                 return false;
             if (!crypter.Decrypt(pMasterKey.second.vchCryptedKey, vMasterKey))
                 continue; // try another master key
@@ -747,6 +757,7 @@ void CWallet::EraseFromWallet(const uint256& hash)
     return;
 }
 
+
 isminetype CWallet::IsMine(const CTxIn& txin) const
 {
     {
@@ -761,30 +772,13 @@ isminetype CWallet::IsMine(const CTxIn& txin) const
     return ISMINE_NO;
 }
 
-bool CWallet::IsUsed(const CBitcoinAddress address) const
-{
-    LOCK(cs_wallet);
-    CScript scriptPubKey = GetScriptForDestination(address.Get());
-    if (!::IsMine(*this, scriptPubKey)) {
-        return false;
-    }
-
-    for (map<uint256, CWalletTx>::const_iterator it = mapWallet.begin(); it != mapWallet.end(); ++it) {
-        const CWalletTx& wtx = (*it).second;
-        if (wtx.IsCoinBase()) {
-            continue;
-        }
-        for (const CTxOut& txout : wtx.vout) {
-            if (txout.scriptPubKey == scriptPubKey)
-                return true;
-        }
-    }
-    return false;
-}
-
 bool CWallet::IsMyZerocoinSpend(const CBigNum& bnSerial) const
 {
-    return zgeaTracker->HasSerial(bnSerial);
+    // **** Zero Disable Start ****
+    // return zgeaTracker->HasSerial(bnSerial);
+    // **** Zero Disable End ****
+    
+    return false;
 }
 
 CAmount CWallet::GetDebit(const CTxIn& txin, const isminefilter& filter) const
@@ -1115,7 +1109,7 @@ CAmount CWalletTx::GetAnonymizableCredit(bool fUseCache) const
         const CTxIn vin = CTxIn(hashTx, i);
 
         if (pwallet->IsSpent(hashTx, i) || pwallet->IsLockedCoin(hashTx, i)) continue;
-        if (fMasterNode && vout[i].nValue == 10000 * COIN) continue; // do not count MN-like outputs
+        if (fMasterNode && IsMasternodeCollateral(vout[i].nValue)) continue; // do not count MN-like outputs
 
         const int rounds = pwallet->GetInputObfuscationRounds(vin);
         if (rounds >= -2 && rounds < nZeromintPercentage) {
@@ -1179,7 +1173,7 @@ CAmount CWalletTx::GetUnlockedCredit() const
         const CTxOut& txout = vout[i];
 
         if (pwallet->IsSpent(hashTx, i) || pwallet->IsLockedCoin(hashTx, i)) continue;
-        if (fMasterNode && vout[i].nValue == 10000 * COIN) continue; // do not count MN-like outputs
+        if (fMasterNode && IsMasternodeCollateral(vout[i].nValue)) continue; // do not count MN-like outputs
 
         nCredit += pwallet->GetCredit(txout, ISMINE_SPENDABLE);
         if (!MoneyRange(nCredit))
@@ -1213,7 +1207,7 @@ CAmount CWalletTx::GetLockedCredit() const
         }
 
         // Add masternode collaterals which are handled likc locked coins
-        else if (fMasterNode && vout[i].nValue == 10000 * COIN) {
+        if (fMasterNode && IsMasternodeCollateral(vout[i].nValue)) {
             nCredit += pwallet->GetCredit(txout, ISMINE_SPENDABLE);
         }
 
@@ -1332,7 +1326,7 @@ CAmount CWalletTx::GetLockedWatchOnlyCredit() const
         }
 
         // Add masternode collaterals which are handled likc locked coins
-        else if (fMasterNode && vout[i].nValue == 10000 * COIN) {
+        if (fMasterNode && IsMasternodeCollateral(vout[i].nValue)) {
             nCredit += pwallet->GetCredit(txout, ISMINE_WATCH_ONLY);
         }
 
@@ -1649,32 +1643,44 @@ std::map<libzerocoin::CoinDenomination, int> mapMintMaturity;
 int nLastMaturityCheck = 0;
 CAmount CWallet::GetZerocoinBalance(bool fMatureOnly) const
 {
-    if (fMatureOnly) {
-        if (chainActive.Height() > nLastMaturityCheck)
-            mapMintMaturity = GetMintMaturityHeight();
-        nLastMaturityCheck = chainActive.Height();
+    // **** Zero Disable Start ****
+    // if (fMatureOnly) {
+    //     if (chainActive.Height() > nLastMaturityCheck)
+    //         mapMintMaturity = GetMintMaturityHeight();
+    //     nLastMaturityCheck = chainActive.Height();
+    // 
+    //     CAmount nBalance = 0;
+    //     vector<CMintMeta> vMints = zgeaTracker->GetMints(true);
+    //     for (auto meta : vMints) {
+    //         if (meta.nHeight >= mapMintMaturity.at(meta.denom) || meta.nHeight >= chainActive.Height() || meta.nHeight == 0)
+    //             continue;
+    //         nBalance += libzerocoin::ZerocoinDenominationToAmount(meta.denom);
+    //     }
+    //     return nBalance;
+    // }
+    // 
+    // return zgeaTracker->GetBalance(false, false);
+    // **** Zero Disable End ****
 
-        CAmount nBalance = 0;
-        vector<CMintMeta> vMints = zgeaTracker->GetMints(true);
-        for (auto meta : vMints) {
-            if (meta.nHeight >= mapMintMaturity.at(meta.denom) || meta.nHeight >= chainActive.Height() || meta.nHeight == 0)
-                continue;
-            nBalance += libzerocoin::ZerocoinDenominationToAmount(meta.denom);
-        }
-        return nBalance;
-    }
-
-    return zgeaTracker->GetBalance(false, false);
+    return 0;
 }
 
 CAmount CWallet::GetImmatureZerocoinBalance() const
 {
-    return GetZerocoinBalance(false) - GetZerocoinBalance(true) - GetUnconfirmedZerocoinBalance();
+    // **** Zero Disable Start ****
+    // return GetZerocoinBalance(false) - GetZerocoinBalance(true) - GetUnconfirmedZerocoinBalance();
+    // **** Zero Disable End ****
+    
+    return 0;
 }
 
 CAmount CWallet::GetUnconfirmedZerocoinBalance() const
 {
-    return zgeaTracker->GetUnconfirmedBalance();
+    // **** Zero Disable Start ****
+    // return zgeaTracker->GetUnconfirmedBalance();
+    // **** Zero Disable End ****
+    
+    return 0;
 }
 
 CAmount CWallet::GetUnlockedCoins() const
@@ -1965,13 +1971,14 @@ void CWallet::AvailableCoins(vector<COutput>& vCoins, bool fOnlyConfirmed, const
                 if (nCoinType == ONLY_DENOMINATED) {
                     found = IsDenominatedAmount(pcoin->vout[i].nValue);
                 } else if (nCoinType == ONLY_NOT10000IFMN) {
-                    found = !(fMasterNode && pcoin->vout[i].nValue == 10000 * COIN);
+                    found = !(fMasterNode && IsMasternodeCollateral(pcoin->vout[i].nValue));
                 } else if (nCoinType == ONLY_NONDENOMINATED_NOT10000IFMN) {
                     if (IsCollateralAmount(pcoin->vout[i].nValue)) continue; // do not use collateral amounts
                     found = !IsDenominatedAmount(pcoin->vout[i].nValue);
-                    if (found && fMasterNode) found = pcoin->vout[i].nValue != 10000 * COIN; // do not use Hot MN funds
+                    if (found && fMasterNode)
+                        found = !IsMasternodeCollateral(pcoin->vout[i].nValue); // do not use Hot MN funds
                 } else if (nCoinType == ONLY_10000) {
-                    found = pcoin->vout[i].nValue == 10000 * COIN;
+                    found = IsMasternodeCollateral(pcoin->vout[i].nValue);
                 } else {
                     found = true;
                 }
@@ -2496,7 +2503,7 @@ bool CWallet::SelectCoinsDark(CAmount nValueMin, CAmount nValueMax, std::vector<
         if (out.tx->vout[out.i].nValue < CENT) continue;
         //do not allow collaterals to be selected
         if (IsCollateralAmount(out.tx->vout[out.i].nValue)) continue;
-        if (fMasterNode && out.tx->vout[out.i].nValue == 10000 * COIN) continue; //masternode input
+        if (fMasterNode && IsMasternodeCollateral(out.tx->vout[out.i].nValue)) continue; //masternode input
 
         if (nValueRet + out.tx->vout[out.i].nValue <= nValueMax) {
             CTxIn vin = CTxIn(out.tx->GetHash(), out.i);
@@ -2977,11 +2984,10 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
     if (GetAdjustedTime() - chainActive.Tip()->GetBlockTime() < 60)
         MilliSleep(10000);
 
-    CAmount nCredit;
+    CAmount nCredit = 0;
     CScript scriptPubKeyKernel;
     bool fKernelFound = false;
     for (std::unique_ptr<CStakeInput>& stakeInput : listInputs) {
-        nCredit = 0;
         // Make sure the wallet is unlocked and shutdown hasn't been requested
         if (IsLocked() || ShutdownRequested())
             return false;
@@ -3048,6 +3054,7 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
                 LogPrintf("%s : failed to create TxIn\n", __func__);
                 txNew.vin.clear();
                 txNew.vout.clear();
+                nCredit = 0;
                 continue;
             }
             txNew.vin.emplace_back(in);
@@ -3986,106 +3993,108 @@ bool CWallet::GetDestData(const CTxDestination& dest, const std::string& key, st
 // CWallet::AutoZeromint() gets called with each new incoming block
 void CWallet::AutoZeromint()
 {
-    // Don't bother Autominting if Zerocoin Protocol isn't active
-    if (GetAdjustedTime() > GetSporkValue(SPORK_16_ZEROCOIN_MAINTENANCE_MODE)) return;
-
-    // Wait until blockchain + masternodes are fully synced and wallet is unlocked.
-    if (!masternodeSync.IsSynced() || IsLocked()){
-        // Re-adjust startup time in case syncing needs a long time.
-        nStartupTime = GetAdjustedTime();
-        return;
-    }
-
-    // After sync wait even more to reduce load when wallet was just started
-    int64_t nWaitTime = GetAdjustedTime() - nStartupTime;
-    if (nWaitTime < AUTOMINT_DELAY){
-        LogPrint("zero", "CWallet::AutoZeromint(): time since sync-completion or last Automint (%ld sec) < default waiting time (%ld sec). Waiting again...\n", nWaitTime, AUTOMINT_DELAY);
-        return;
-    }
-
-    CAmount nZerocoinBalance = GetZerocoinBalance(false); //false includes both pending and mature zerocoins. Need total balance for this so nothing is overminted.
-    CAmount nBalance = GetUnlockedCoins(); // We only consider unlocked coins, this also excludes masternode-vins
-                                           // from being accidentally minted
-    CAmount nMintAmount = 0;
-    CAmount nToMintAmount = 0;
-
-    // zGEA are integers > 0, so we can't mint 10% of 9 GEA
-    if (nBalance < 10){
-        LogPrint("zero", "CWallet::AutoZeromint(): available balance (%ld) too small for minting zGEA\n", nBalance);
-        return;
-    }
-
-    // Percentage of zGEA we already have
-    double dPercentage = 100 * (double)nZerocoinBalance / (double)(nZerocoinBalance + nBalance);
-
-    // Check if minting is actually needed
-    if(dPercentage >= nZeromintPercentage){
-        LogPrint("zero", "CWallet::AutoZeromint() @block %ld: percentage of existing zGEA (%lf%%) already >= configured percentage (%d%%). No minting needed...\n",
-                  chainActive.Tip()->nHeight, dPercentage, nZeromintPercentage);
-        return;
-    }
-
-    // zGEA amount needed for the target percentage
-    nToMintAmount = ((nZerocoinBalance + nBalance) * nZeromintPercentage / 100);
-
-    // zGEA amount missing from target (must be minted)
-    nToMintAmount = (nToMintAmount - nZerocoinBalance) / COIN;
-
-    // Use the biggest denomination smaller than the needed zGEA We'll only mint exact denomination to make minting faster.
-    // Exception: for big amounts use 6666 (6666 = 1*5000 + 1*1000 + 1*500 + 1*100 + 1*50 + 1*10 + 1*5 + 1) to create all
-    // possible denominations to avoid having 5000 denominations only.
-    // If a preferred denomination is used (means nPreferredDenom != 0) do nothing until we have enough GEA to mint this denomination
-
-    if (nPreferredDenom > 0){
-        if (nToMintAmount >= nPreferredDenom)
-            nToMintAmount = nPreferredDenom;  // Enough coins => mint preferred denomination
-        else
-            nToMintAmount = 0;                // Not enough coins => do nothing and wait for more coins
-    }
-
-    if (nToMintAmount >= ZQ_6666){
-        nMintAmount = ZQ_6666;
-    } else if (nToMintAmount >= libzerocoin::CoinDenomination::ZQ_FIVE_THOUSAND){
-        nMintAmount = libzerocoin::CoinDenomination::ZQ_FIVE_THOUSAND;
-    } else if (nToMintAmount >= libzerocoin::CoinDenomination::ZQ_ONE_THOUSAND){
-        nMintAmount = libzerocoin::CoinDenomination::ZQ_ONE_THOUSAND;
-    } else if (nToMintAmount >= libzerocoin::CoinDenomination::ZQ_FIVE_HUNDRED){
-        nMintAmount = libzerocoin::CoinDenomination::ZQ_FIVE_HUNDRED;
-    } else if (nToMintAmount >= libzerocoin::CoinDenomination::ZQ_ONE_HUNDRED){
-        nMintAmount = libzerocoin::CoinDenomination::ZQ_ONE_HUNDRED;
-    } else if (nToMintAmount >= libzerocoin::CoinDenomination::ZQ_FIFTY){
-        nMintAmount = libzerocoin::CoinDenomination::ZQ_FIFTY;
-    } else if (nToMintAmount >= libzerocoin::CoinDenomination::ZQ_TEN){
-        nMintAmount = libzerocoin::CoinDenomination::ZQ_TEN;
-    } else if (nToMintAmount >= libzerocoin::CoinDenomination::ZQ_FIVE){
-        nMintAmount = libzerocoin::CoinDenomination::ZQ_FIVE;
-    } else if (nToMintAmount >= libzerocoin::CoinDenomination::ZQ_ONE){
-        nMintAmount = libzerocoin::CoinDenomination::ZQ_ONE;
-    } else {
-        nMintAmount = 0;
-    }
-
-    if (nMintAmount > 0){
-    CWalletTx wtx;
-        vector<CDeterministicMint> vDMints;
-        string strError = pwalletMain->MintZerocoin(nMintAmount*COIN, wtx, vDMints);
-
-        // Return if something went wrong during minting
-        if (strError != ""){
-            LogPrintf("CWallet::AutoZeromint(): auto minting failed with error: %s\n", strError);
-            return;
-        }
-        nZerocoinBalance = GetZerocoinBalance(false);
-        nBalance = GetUnlockedCoins();
-        dPercentage = 100 * (double)nZerocoinBalance / (double)(nZerocoinBalance + nBalance);
-        LogPrintf("CWallet::AutoZeromint() @ block %ld: successfully minted %ld zGEA. Current percentage of zGEA: %lf%%\n",
-                  chainActive.Tip()->nHeight, nMintAmount, dPercentage);
-        // Re-adjust startup time to delay next Automint for 5 minutes
-        nStartupTime = GetAdjustedTime();
-    }
-    else {
-        LogPrintf("CWallet::AutoZeromint(): Nothing minted because either not enough funds available or the requested denomination size (%d) is not yet reached.\n", nPreferredDenom);
-    }
+    // **** Zero Disable Start ****
+    // // Don't bother Autominting if Zerocoin Protocol isn't active
+    // if (GetAdjustedTime() > GetSporkValue(SPORK_16_ZEROCOIN_MAINTENANCE_MODE)) return;
+    // 
+    // // Wait until blockchain + masternodes are fully synced and wallet is unlocked.
+    // if (!masternodeSync.IsSynced() || IsLocked()){
+    //     // Re-adjust startup time in case syncing needs a long time.
+    //     nStartupTime = GetAdjustedTime();
+    //     return;
+    // }
+    // 
+    // // After sync wait even more to reduce load when wallet was just started
+    // int64_t nWaitTime = GetAdjustedTime() - nStartupTime;
+    // if (nWaitTime < AUTOMINT_DELAY){
+    //     LogPrint("zero", "CWallet::AutoZeromint(): time since sync-completion or last Automint (%ld sec) < default waiting time (%ld sec). Waiting again...\n", nWaitTime, AUTOMINT_DELAY);
+    //     return;
+    // }
+    // 
+    // CAmount nZerocoinBalance = GetZerocoinBalance(false); //false includes both pending and mature zerocoins. Need total balance for this so nothing is overminted.
+    // CAmount nBalance = GetUnlockedCoins(); // We only consider unlocked coins, this also excludes masternode-vins
+    //                                        // from being accidentally minted
+    // CAmount nMintAmount = 0;
+    // CAmount nToMintAmount = 0;
+    // 
+    // // zGEA are integers > 0, so we can't mint 10% of 9 GEA
+    // if (nBalance < 10){
+    //     LogPrint("zero", "CWallet::AutoZeromint(): available balance (%ld) too small for minting zGEA\n", nBalance);
+    //     return;
+    // }
+    // 
+    // // Percentage of zGEA we already have
+    // double dPercentage = 100 * (double)nZerocoinBalance / (double)(nZerocoinBalance + nBalance);
+    // 
+    // // Check if minting is actually needed
+    // if(dPercentage >= nZeromintPercentage){
+    //     LogPrint("zero", "CWallet::AutoZeromint() @block %ld: percentage of existing zGEA (%lf%%) already >= configured percentage (%d%%). No minting needed...\n",
+    //               chainActive.Tip()->nHeight, dPercentage, nZeromintPercentage);
+    //     return;
+    // }
+    // 
+    // // zGEA amount needed for the target percentage
+    // nToMintAmount = ((nZerocoinBalance + nBalance) * nZeromintPercentage / 100);
+    // 
+    // // zGEA amount missing from target (must be minted)
+    // nToMintAmount = (nToMintAmount - nZerocoinBalance) / COIN;
+    // 
+    // // Use the biggest denomination smaller than the needed zGEA We'll only mint exact denomination to make minting faster.
+    // // Exception: for big amounts use 6666 (6666 = 1*5000 + 1*1000 + 1*500 + 1*100 + 1*50 + 1*10 + 1*5 + 1) to create all
+    // // possible denominations to avoid having 5000 denominations only.
+    // // If a preferred denomination is used (means nPreferredDenom != 0) do nothing until we have enough GEA to mint this denomination
+    // 
+    // if (nPreferredDenom > 0){
+    //     if (nToMintAmount >= nPreferredDenom)
+    //         nToMintAmount = nPreferredDenom;  // Enough coins => mint preferred denomination
+    //     else
+    //         nToMintAmount = 0;                // Not enough coins => do nothing and wait for more coins
+    // }
+    // 
+    // if (nToMintAmount >= ZQ_6666){
+    //     nMintAmount = ZQ_6666;
+    // } else if (nToMintAmount >= libzerocoin::CoinDenomination::ZQ_FIVE_THOUSAND){
+    //     nMintAmount = libzerocoin::CoinDenomination::ZQ_FIVE_THOUSAND;
+    // } else if (nToMintAmount >= libzerocoin::CoinDenomination::ZQ_ONE_THOUSAND){
+    //     nMintAmount = libzerocoin::CoinDenomination::ZQ_ONE_THOUSAND;
+    // } else if (nToMintAmount >= libzerocoin::CoinDenomination::ZQ_FIVE_HUNDRED){
+    //     nMintAmount = libzerocoin::CoinDenomination::ZQ_FIVE_HUNDRED;
+    // } else if (nToMintAmount >= libzerocoin::CoinDenomination::ZQ_ONE_HUNDRED){
+    //     nMintAmount = libzerocoin::CoinDenomination::ZQ_ONE_HUNDRED;
+    // } else if (nToMintAmount >= libzerocoin::CoinDenomination::ZQ_FIFTY){
+    //     nMintAmount = libzerocoin::CoinDenomination::ZQ_FIFTY;
+    // } else if (nToMintAmount >= libzerocoin::CoinDenomination::ZQ_TEN){
+    //     nMintAmount = libzerocoin::CoinDenomination::ZQ_TEN;
+    // } else if (nToMintAmount >= libzerocoin::CoinDenomination::ZQ_FIVE){
+    //     nMintAmount = libzerocoin::CoinDenomination::ZQ_FIVE;
+    // } else if (nToMintAmount >= libzerocoin::CoinDenomination::ZQ_ONE){
+    //     nMintAmount = libzerocoin::CoinDenomination::ZQ_ONE;
+    // } else {
+    //     nMintAmount = 0;
+    // }
+    // 
+    // if (nMintAmount > 0){
+    // CWalletTx wtx;
+    //     vector<CDeterministicMint> vDMints;
+    //     string strError = pwalletMain->MintZerocoin(nMintAmount*COIN, wtx, vDMints);
+    // 
+    //     // Return if something went wrong during minting
+    //     if (strError != ""){
+    //         LogPrintf("CWallet::AutoZeromint(): auto minting failed with error: %s\n", strError);
+    //         return;
+    //     }
+    //     nZerocoinBalance = GetZerocoinBalance(false);
+    //     nBalance = GetUnlockedCoins();
+    //     dPercentage = 100 * (double)nZerocoinBalance / (double)(nZerocoinBalance + nBalance);
+    //     LogPrintf("CWallet::AutoZeromint() @ block %ld: successfully minted %ld zGEA. Current percentage of zGEA: %lf%%\n",
+    //               chainActive.Tip()->nHeight, nMintAmount, dPercentage);
+    //     // Re-adjust startup time to delay next Automint for 5 minutes
+    //     nStartupTime = GetAdjustedTime();
+    // }
+    // else {
+    //     LogPrintf("CWallet::AutoZeromint(): Nothing minted because either not enough funds available or the requested denomination size (%d) is not yet reached.\n", nPreferredDenom);
+    // }
+    // **** Zero Disable End ****
 }
 
 void CWallet::AutoCombineDust()
@@ -4100,7 +4109,6 @@ void CWallet::AutoCombineDust()
     //coins are sectioned by address. This combination code only wants to combine inputs that belong to the same address
     for (map<CBitcoinAddress, vector<COutput> >::iterator it = mapCoinsByAddress.begin(); it != mapCoinsByAddress.end(); it++) {
         vector<COutput> vCoins, vRewardCoins;
-        bool maxSize = false;
         vCoins = it->second;
 
         // We don't want the tx to be refused for being too large
@@ -4114,7 +4122,7 @@ void CWallet::AutoCombineDust()
             if (!out.fSpendable)
                 continue;
             //no coins should get this far if they dont have proper maturity, this is double checking
-            if (out.tx->IsCoinStake() && out.tx->GetDepthInMainChain() < Params().COINBASE_MATURITY() + 1)
+            if (out.tx->IsCoinStake() && out.tx->GetDepthInMainChain() < COINBASE_MATURITY + 1)
                 continue;
 
             COutPoint outpt(out.tx->GetHash(), out.i);
@@ -4128,10 +4136,8 @@ void CWallet::AutoCombineDust()
 
             // Around 180 bytes per input. We use 190 to be certain
             txSizeEstimate += 190;
-            if (txSizeEstimate >= MAX_STANDARD_TX_SIZE - 200) {
-                maxSize = true;
+            if (txSizeEstimate >= MAX_STANDARD_TX_SIZE - 200)
                 break;
-            }
         }
 
         //if no inputs found then return
@@ -4169,7 +4175,7 @@ void CWallet::AutoCombineDust()
         }
 
         //we don't combine below the threshold unless the fees are 0 to avoid paying fees over fees over fees
-        if (!maxSize && nTotalRewardsValue < nAutoCombineThreshold * COIN && nFeeRet > 0)
+        if (nTotalRewardsValue < nAutoCombineThreshold * COIN && nFeeRet > 0)
             continue;
 
         if (!CommitTransaction(wtx, keyChange)) {
@@ -4470,244 +4476,257 @@ bool CWallet::GetZerocoinKey(const CBigNum& bnSerial, CKey& key)
 
 bool CWallet::CreateZGEAOutPut(libzerocoin::CoinDenomination denomination, CTxOut& outMint, CDeterministicMint& dMint)
 {
-    // mint a new coin (create Pedersen Commitment) and extract PublicCoin that is shareable from it
-    libzerocoin::PrivateCoin coin(Params().Zerocoin_Params(false), denomination, false);
-    zwalletMain->GenerateDeterministicZGEA(denomination, coin, dMint);
+    // **** Zero Disable Start ****
+    // // mint a new coin (create Pedersen Commitment) and extract PublicCoin that is shareable from it
+    // libzerocoin::PrivateCoin coin(Params().Zerocoin_Params(false), denomination, false);
+    // zwalletMain->GenerateDeterministicZGEA(denomination, coin, dMint);
+    // 
+    // libzerocoin::PublicCoin pubCoin = coin.getPublicCoin();
+    // 
+    // // Validate
+    // if(!pubCoin.validate())
+    //     return error("%s: newly created pubcoin is not valid", __func__);
+    // 
+    // zwalletMain->UpdateCount();
+    // 
+    // CScript scriptSerializedCoin = CScript() << OP_ZEROCOINMINT << pubCoin.getValue().getvch().size() << pubCoin.getValue().getvch();
+    // outMint = CTxOut(libzerocoin::ZerocoinDenominationToAmount(denomination), scriptSerializedCoin);
+    // 
+    // return true;
+    // **** Zero Disable End ****
 
-    libzerocoin::PublicCoin pubCoin = coin.getPublicCoin();
-
-    // Validate
-    if(!pubCoin.validate())
-        return error("%s: newly created pubcoin is not valid", __func__);
-
-    zwalletMain->UpdateCount();
-
-    CScript scriptSerializedCoin = CScript() << OP_ZEROCOINMINT << pubCoin.getValue().getvch().size() << pubCoin.getValue().getvch();
-    outMint = CTxOut(libzerocoin::ZerocoinDenominationToAmount(denomination), scriptSerializedCoin);
-
-    return true;
+    return false;
 }
 
 bool CWallet::CreateZerocoinMintTransaction(const CAmount nValue, CMutableTransaction& txNew, vector<CDeterministicMint>& vDMints, CReserveKey* reservekey, int64_t& nFeeRet, std::string& strFailReason, const CCoinControl* coinControl, const bool isZCSpendChange)
 {
-    if (IsLocked()) {
-        strFailReason = _("Error: Wallet locked, unable to create transaction!");
-        LogPrintf("SpendZerocoin() : %s", strFailReason.c_str());
-        return false;
-    }
+    // **** Zero Disable Start ****
+    // if (IsLocked()) {
+    //     strFailReason = _("Error: Wallet locked, unable to create transaction!");
+    //     LogPrintf("SpendZerocoin() : %s", strFailReason.c_str());
+    //     return false;
+    // }
+    // 
+    // //add multiple mints that will fit the amount requested as closely as possible
+    // CAmount nMintingValue = 0;
+    // CAmount nValueRemaining = 0;
+    // while (true) {
+    //     //mint a coin with the closest denomination to what is being requested
+    //     nFeeRet = max(static_cast<int>(txNew.vout.size()), 1) * Params().Zerocoin_MintFee();
+    //     nValueRemaining = nValue - nMintingValue - (isZCSpendChange ? nFeeRet : 0);
+    // 
+    //     // if this is change of a zerocoinspend, then we can't mint all change, at least something must be given as a fee
+    //     if (isZCSpendChange && nValueRemaining <= 1 * COIN)
+    //         break;
+    // 
+    //     libzerocoin::CoinDenomination denomination = libzerocoin::AmountToClosestDenomination(nValueRemaining, nValueRemaining);
+    //     if (denomination == libzerocoin::ZQ_ERROR)
+    //         break;
+    // 
+    //     CAmount nValueNewMint = libzerocoin::ZerocoinDenominationToAmount(denomination);
+    //     nMintingValue += nValueNewMint;
+    // 
+    //     CTxOut outMint;
+    //     CDeterministicMint dMint;
+    //     if (!CreateZGEAOutPut(denomination, outMint, dMint)) {
+    //         strFailReason = strprintf("%s: failed to create new zgea output", __func__);
+    //         return error(strFailReason.c_str());
+    //     }
+    //     txNew.vout.push_back(outMint);
+    // 
+    //     //store as CZerocoinMint for later use
+    //     LogPrint("zero", "%s: new mint %s\n", __func__, dMint.ToString());
+    //     vDMints.emplace_back(dMint);
+    // }
+    // 
+    // // calculate fee
+    // CAmount nFee = Params().Zerocoin_MintFee() * txNew.vout.size();
+    // 
+    // // no ability to select more coins if this is a ZCSpend change mint
+    // CAmount nTotalValue = (isZCSpendChange ? nValue : (nValue + nFee));
+    // 
+    // // check for a zerocoinspend that mints the change
+    // CAmount nValueIn = 0;
+    // set<pair<const CWalletTx*, unsigned int> > setCoins;
+    // if (isZCSpendChange) {
+    //     nValueIn = nValue;
+    // } else {
+    //     // select UTXO's to use
+    //     if (!SelectCoins(nTotalValue, setCoins, nValueIn, coinControl)) {
+    //         strFailReason = _("Insufficient or insufficient confirmed funds, you might need to wait a few minutes and try again.");
+    //         return false;
+    //     }
+    // 
+    //     // Fill vin
+    //     for (const std::pair<const CWalletTx*, unsigned int>& coin : setCoins)
+    //         txNew.vin.push_back(CTxIn(coin.first->GetHash(), coin.second));
+    // }
+    // 
+    // //any change that is less than 0.0100000 will be ignored and given as an extra fee
+    // //also assume that a zerocoinspend that is minting the change will not have any change that goes to Gea
+    // CAmount nChange = nValueIn - nTotalValue; // Fee already accounted for in nTotalValue
+    // if (nChange > 1 * CENT && !isZCSpendChange) {
+    //     // Fill a vout to ourself using the largest contributing address
+    //     CScript scriptChange = GetLargestContributor(setCoins);
+    // 
+    //     //add to the transaction
+    //     CTxOut outChange(nChange, scriptChange);
+    //     txNew.vout.push_back(outChange);
+    // } else {
+    //     if (reservekey)
+    //         reservekey->ReturnKey();
+    // }
+    // 
+    // // Sign if these are gea outputs - NOTE that zGEA outputs are signed later in SoK
+    // if (!isZCSpendChange) {
+    //     int nIn = 0;
+    //     for (const std::pair<const CWalletTx*, unsigned int>& coin : setCoins) {
+    //         if (!SignSignature(*this, *coin.first, txNew, nIn++)) {
+    //             strFailReason = _("Signing transaction failed");
+    //             return false;
+    //         }
+    //     }
+    // }
+    // 
+    // return true;
+    // **** Zero Disable End ****
 
-    //add multiple mints that will fit the amount requested as closely as possible
-    CAmount nMintingValue = 0;
-    CAmount nValueRemaining = 0;
-    while (true) {
-        //mint a coin with the closest denomination to what is being requested
-        nFeeRet = max(static_cast<int>(txNew.vout.size()), 1) * Params().Zerocoin_MintFee();
-        nValueRemaining = nValue - nMintingValue - (isZCSpendChange ? nFeeRet : 0);
-
-        // if this is change of a zerocoinspend, then we can't mint all change, at least something must be given as a fee
-        if (isZCSpendChange && nValueRemaining <= 1 * COIN)
-            break;
-
-        libzerocoin::CoinDenomination denomination = libzerocoin::AmountToClosestDenomination(nValueRemaining, nValueRemaining);
-        if (denomination == libzerocoin::ZQ_ERROR)
-            break;
-
-        CAmount nValueNewMint = libzerocoin::ZerocoinDenominationToAmount(denomination);
-        nMintingValue += nValueNewMint;
-
-        CTxOut outMint;
-        CDeterministicMint dMint;
-        if (!CreateZGEAOutPut(denomination, outMint, dMint)) {
-            strFailReason = strprintf("%s: failed to create new zgea output", __func__);
-            return error(strFailReason.c_str());
-        }
-        txNew.vout.push_back(outMint);
-
-        //store as CZerocoinMint for later use
-        LogPrint("zero", "%s: new mint %s\n", __func__, dMint.ToString());
-        vDMints.emplace_back(dMint);
-    }
-
-    // calculate fee
-    CAmount nFee = Params().Zerocoin_MintFee() * txNew.vout.size();
-
-    // no ability to select more coins if this is a ZCSpend change mint
-    CAmount nTotalValue = (isZCSpendChange ? nValue : (nValue + nFee));
-
-    // check for a zerocoinspend that mints the change
-    CAmount nValueIn = 0;
-    set<pair<const CWalletTx*, unsigned int> > setCoins;
-    if (isZCSpendChange) {
-        nValueIn = nValue;
-    } else {
-        // select UTXO's to use
-        if (!SelectCoins(nTotalValue, setCoins, nValueIn, coinControl)) {
-            strFailReason = _("Insufficient or insufficient confirmed funds, you might need to wait a few minutes and try again.");
-            return false;
-        }
-
-        // Fill vin
-        for (const std::pair<const CWalletTx*, unsigned int>& coin : setCoins)
-            txNew.vin.push_back(CTxIn(coin.first->GetHash(), coin.second));
-    }
-
-    //any change that is less than 0.0100000 will be ignored and given as an extra fee
-    //also assume that a zerocoinspend that is minting the change will not have any change that goes to Gea
-    CAmount nChange = nValueIn - nTotalValue; // Fee already accounted for in nTotalValue
-    if (nChange > 1 * CENT && !isZCSpendChange) {
-        // Fill a vout to ourself using the largest contributing address
-        CScript scriptChange = GetLargestContributor(setCoins);
-
-        //add to the transaction
-        CTxOut outChange(nChange, scriptChange);
-        txNew.vout.push_back(outChange);
-    } else {
-        if (reservekey)
-            reservekey->ReturnKey();
-    }
-
-    // Sign if these are gea outputs - NOTE that zGEA outputs are signed later in SoK
-    if (!isZCSpendChange) {
-        int nIn = 0;
-        for (const std::pair<const CWalletTx*, unsigned int>& coin : setCoins) {
-            if (!SignSignature(*this, *coin.first, txNew, nIn++)) {
-                strFailReason = _("Signing transaction failed");
-                return false;
-            }
-        }
-    }
-
-    return true;
+    strFailReason = _("Zerocoin is disabled");
+    return false;
 }
 
 bool CWallet::MintToTxIn(CZerocoinMint zerocoinSelected, int nSecurityLevel, const uint256& hashTxOut, CTxIn& newTxIn,
                          CZerocoinSpendReceipt& receipt, libzerocoin::SpendType spendType, CBlockIndex* pindexCheckpoint)
 {
-    // Default error status if not changed below
-    receipt.SetStatus(_("Transaction Mint Started"), ZGEA_TXMINT_GENERAL);
-    libzerocoin::ZerocoinParams* paramsAccumulator = Params().Zerocoin_Params(false);
-
-    bool isV1Coin = libzerocoin::ExtractVersionFromSerial(zerocoinSelected.GetSerialNumber()) < libzerocoin::PrivateCoin::PUBKEY_VERSION;
-    libzerocoin::ZerocoinParams* paramsCoin = Params().Zerocoin_Params(isV1Coin);
-    //LogPrintf("%s: *** using v1 coin params=%b, using v1 acc params=%b\n", __func__, isV1Coin, chainActive.Height() < Params().Zerocoin_Block_V2_Start());
-
-    // 2. Get pubcoin from the private coin
-    libzerocoin::CoinDenomination denomination = zerocoinSelected.GetDenomination();
-    libzerocoin::PublicCoin pubCoinSelected(paramsCoin, zerocoinSelected.GetValue(), denomination);
-    //LogPrintf("%s : selected mint %s\n pubcoinhash=%s\n", __func__, zerocoinSelected.ToString(), GetPubCoinHash(zerocoinSelected.GetValue()).GetHex());
-    if (!pubCoinSelected.validate()) {
-        receipt.SetStatus(_("The selected mint coin is an invalid coin"), ZGEA_INVALID_COIN);
-        return false;
-    }
-
-    // 3. Compute Accumulator and Witness
-    libzerocoin::Accumulator accumulator(paramsAccumulator, pubCoinSelected.getDenomination());
-    libzerocoin::AccumulatorWitness witness(paramsAccumulator, accumulator, pubCoinSelected);
-    string strFailReason = "";
-    int nMintsAdded = 0;
-    if (!GenerateAccumulatorWitness(pubCoinSelected, accumulator, witness, nSecurityLevel, nMintsAdded, strFailReason, pindexCheckpoint)) {
-        receipt.SetStatus(_("Try to spend with a higher security level to include more coins"), ZGEA_FAILED_ACCUMULATOR_INITIALIZATION);
-        return error("%s : %s", __func__, receipt.GetStatusMessage());
-    }
-
-    // Construct the CoinSpend object. This acts like a signature on the transaction.
-    libzerocoin::PrivateCoin privateCoin(paramsCoin, denomination, false);
-    privateCoin.setPublicCoin(pubCoinSelected);
-    privateCoin.setRandomness(zerocoinSelected.GetRandomness());
-    privateCoin.setSerialNumber(zerocoinSelected.GetSerialNumber());
-
-    //Version 2 zerocoins have a privkey associated with them
-    uint8_t nVersion = zerocoinSelected.GetVersion();
-    privateCoin.setVersion(zerocoinSelected.GetVersion());
-    LogPrintf("%s: privatecoin version=%d\n", __func__, privateCoin.getVersion());
-    if (nVersion >= libzerocoin::PrivateCoin::PUBKEY_VERSION) {
-        CKey key;
-        if (!zerocoinSelected.GetKeyPair(key))
-            return error("%s: failed to set zGEA privkey mint version=%d", __func__, nVersion);
-
-        privateCoin.setPrivKey(key.GetPrivKey());
-    }
-
-
-    uint32_t nChecksum = GetChecksum(accumulator.getValue());
-    CBigNum bnValue;
-    if (!GetAccumulatorValueFromChecksum(nChecksum, false, bnValue) || bnValue == 0)
-        return error("%s: could not find checksum used for spend\n", __func__);
-
-    try {
-        libzerocoin::CoinSpend spend(paramsCoin, paramsAccumulator, privateCoin, accumulator, nChecksum, witness, hashTxOut,
-                                     spendType);
-        LogPrintf("%s\n", spend.ToString());
-
-        if (!spend.Verify(accumulator)) {
-            receipt.SetStatus(_("The new spend coin transaction did not verify"), ZGEA_INVALID_WITNESS);
-            //return false;
-            LogPrintf("** spend.verify failed, trying with different params\n");
-
-            libzerocoin::CoinSpend spend2(Params().Zerocoin_Params(true), paramsAccumulator, privateCoin, accumulator,
-                                          nChecksum, witness, hashTxOut, libzerocoin::SpendType::SPEND);
-            LogPrintf("*** spend2 valid=%d\n", spend2.Verify(accumulator));
-            return false;
-        }
-
-        // Deserialize the CoinSpend intro a fresh object
-        CDataStream serializedCoinSpend(SER_NETWORK, PROTOCOL_VERSION);
-        serializedCoinSpend << spend;
-        std::vector<unsigned char> data(serializedCoinSpend.begin(), serializedCoinSpend.end());
-
-        //Add the coin spend into a GEA transaction
-        newTxIn.scriptSig = CScript() << OP_ZEROCOINSPEND << data.size();
-        newTxIn.scriptSig.insert(newTxIn.scriptSig.end(), data.begin(), data.end());
-        newTxIn.prevout.SetNull();
-
-        //use nSequence as a shorthand lookup of denomination
-        //NOTE that this should never be used in place of checking the value in the final blockchain acceptance/verification
-        //of the transaction
-        newTxIn.nSequence = denomination;
-
-        CDataStream serializedCoinSpendChecking(SER_NETWORK, PROTOCOL_VERSION);
-        try {
-            serializedCoinSpendChecking << spend;
-        } catch (...) {
-            receipt.SetStatus(_("Failed to deserialize"), ZGEA_BAD_SERIALIZATION);
-            return false;
-        }
-
-        libzerocoin::CoinSpend newSpendChecking(paramsCoin, paramsAccumulator, serializedCoinSpendChecking);
-        if (!newSpendChecking.Verify(accumulator)) {
-            receipt.SetStatus(_("The transaction did not verify"), ZGEA_BAD_SERIALIZATION);
-            return false;
-        }
-
-        if (IsSerialKnown(spend.getCoinSerialNumber())) {
-            //Tried to spend an already spent zGEA
-            receipt.SetStatus(_("The coin spend has been used"), ZGEA_SPENT_USED_ZGEA);
-
-            uint256 hashSerial = GetSerialHash(spend.getCoinSerialNumber());
-            if (!zgeaTracker->HasSerialHash(hashSerial))
-                return error("%s: serialhash %s not found in tracker", __func__, hashSerial.GetHex());
-
-            CMintMeta meta = zgeaTracker->Get(hashSerial);
-            meta.isUsed = true;
-            if (!zgeaTracker->UpdateState(meta))
-                LogPrintf("%s: failed to write zerocoinmint\n", __func__);
-
-            pwalletMain->NotifyZerocoinChanged(pwalletMain, zerocoinSelected.GetValue().GetHex(), "Used", CT_UPDATED);
-            return false;
-        }
-
-        uint32_t nAccumulatorChecksum = GetChecksum(accumulator.getValue());
-        CZerocoinSpend zcSpend(spend.getCoinSerialNumber(), 0, zerocoinSelected.GetValue(), zerocoinSelected.GetDenomination(), nAccumulatorChecksum);
-        zcSpend.SetMintCount(nMintsAdded);
-        receipt.AddSpend(zcSpend);
-    } catch (const std::exception&) {
-        receipt.SetStatus(_("CoinSpend: Accumulator witness does not verify"), ZGEA_INVALID_WITNESS);
-        return false;
-    }
-
-    receipt.SetStatus(_("Spend Valid"), ZGEA_SPEND_OKAY); // Everything okay
-
-    return true;
+    // **** Zero Disable Start ****
+    // // Default error status if not changed below
+    // receipt.SetStatus(_("Transaction Mint Started"), ZGEA_TXMINT_GENERAL);
+    // libzerocoin::ZerocoinParams* paramsAccumulator = Params().Zerocoin_Params(false);
+    // 
+    // bool isV1Coin = libzerocoin::ExtractVersionFromSerial(zerocoinSelected.GetSerialNumber()) < libzerocoin::PrivateCoin::PUBKEY_VERSION;
+    // libzerocoin::ZerocoinParams* paramsCoin = Params().Zerocoin_Params(isV1Coin);
+    // //LogPrintf("%s: *** using v1 coin params=%b, using v1 acc params=%b\n", __func__, isV1Coin, chainActive.Height() < Params().Zerocoin_Block_V2_Start());
+    // 
+    // // 2. Get pubcoin from the private coin
+    // libzerocoin::CoinDenomination denomination = zerocoinSelected.GetDenomination();
+    // libzerocoin::PublicCoin pubCoinSelected(paramsCoin, zerocoinSelected.GetValue(), denomination);
+    // //LogPrintf("%s : selected mint %s\n pubcoinhash=%s\n", __func__, zerocoinSelected.ToString(), GetPubCoinHash(zerocoinSelected.GetValue()).GetHex());
+    // if (!pubCoinSelected.validate()) {
+    //     receipt.SetStatus(_("The selected mint coin is an invalid coin"), ZGEA_INVALID_COIN);
+    //     return false;
+    // }
+    // 
+    // // 3. Compute Accumulator and Witness
+    // libzerocoin::Accumulator accumulator(paramsAccumulator, pubCoinSelected.getDenomination());
+    // libzerocoin::AccumulatorWitness witness(paramsAccumulator, accumulator, pubCoinSelected);
+    // string strFailReason = "";
+    // int nMintsAdded = 0;
+    // if (!GenerateAccumulatorWitness(pubCoinSelected, accumulator, witness, nSecurityLevel, nMintsAdded, strFailReason, pindexCheckpoint)) {
+    //     receipt.SetStatus(_("Try to spend with a higher security level to include more coins"), ZGEA_FAILED_ACCUMULATOR_INITIALIZATION);
+    //     return error("%s : %s", __func__, receipt.GetStatusMessage());
+    // }
+    // 
+    // // Construct the CoinSpend object. This acts like a signature on the transaction.
+    // libzerocoin::PrivateCoin privateCoin(paramsCoin, denomination);
+    // privateCoin.setPublicCoin(pubCoinSelected);
+    // privateCoin.setRandomness(zerocoinSelected.GetRandomness());
+    // privateCoin.setSerialNumber(zerocoinSelected.GetSerialNumber());
+    // 
+    // //Version 2 zerocoins have a privkey associated with them
+    // uint8_t nVersion = zerocoinSelected.GetVersion();
+    // privateCoin.setVersion(zerocoinSelected.GetVersion());
+    // LogPrintf("%s: privatecoin version=%d\n", __func__, privateCoin.getVersion());
+    // if (nVersion >= libzerocoin::PrivateCoin::PUBKEY_VERSION) {
+    //     CKey key;
+    //     if (!zerocoinSelected.GetKeyPair(key))
+    //         return error("%s: failed to set zGEA privkey mint version=%d", __func__, nVersion);
+    // 
+    //     privateCoin.setPrivKey(key.GetPrivKey());
+    // }
+    // 
+    // 
+    // uint32_t nChecksum = GetChecksum(accumulator.getValue());
+    // CBigNum bnValue;
+    // if (!GetAccumulatorValueFromChecksum(nChecksum, false, bnValue) || bnValue == 0)
+    //     return error("%s: could not find checksum used for spend\n", __func__);
+    // 
+    // try {
+    //     libzerocoin::CoinSpend spend(paramsCoin, paramsAccumulator, privateCoin, accumulator, nChecksum, witness, hashTxOut,
+    //                                  spendType);
+    //     LogPrintf("%s\n", spend.ToString());
+    // 
+    //     if (!spend.Verify(accumulator)) {
+    //         receipt.SetStatus(_("The new spend coin transaction did not verify"), ZGEA_INVALID_WITNESS);
+    //         //return false;
+    //         LogPrintf("** spend.verify failed, trying with different params\n");
+    // 
+    //         libzerocoin::CoinSpend spend2(Params().Zerocoin_Params(true), paramsAccumulator, privateCoin, accumulator,
+    //                                       nChecksum, witness, hashTxOut, libzerocoin::SpendType::SPEND);
+    //         LogPrintf("*** spend2 valid=%d\n", spend2.Verify(accumulator));
+    //         return false;
+    //     }
+    // 
+    //     // Deserialize the CoinSpend intro a fresh object
+    //     CDataStream serializedCoinSpend(SER_NETWORK, PROTOCOL_VERSION);
+    //     serializedCoinSpend << spend;
+    //     std::vector<unsigned char> data(serializedCoinSpend.begin(), serializedCoinSpend.end());
+    // 
+    //     //Add the coin spend into a GEA transaction
+    //     newTxIn.scriptSig = CScript() << OP_ZEROCOINSPEND << data.size();
+    //     newTxIn.scriptSig.insert(newTxIn.scriptSig.end(), data.begin(), data.end());
+    //     newTxIn.prevout.SetNull();
+    // 
+    //     //use nSequence as a shorthand lookup of denomination
+    //     //NOTE that this should never be used in place of checking the value in the final blockchain acceptance/verification
+    //     //of the transaction
+    //     newTxIn.nSequence = denomination;
+    // 
+    //     CDataStream serializedCoinSpendChecking(SER_NETWORK, PROTOCOL_VERSION);
+    //     try {
+    //         serializedCoinSpendChecking << spend;
+    //     } catch (...) {
+    //         receipt.SetStatus(_("Failed to deserialize"), ZGEA_BAD_SERIALIZATION);
+    //         return false;
+    //     }
+    // 
+    //     libzerocoin::CoinSpend newSpendChecking(paramsCoin, paramsAccumulator, serializedCoinSpendChecking);
+    //     if (!newSpendChecking.Verify(accumulator)) {
+    //         receipt.SetStatus(_("The transaction did not verify"), ZGEA_BAD_SERIALIZATION);
+    //         return false;
+    //     }
+    // 
+    //     if (IsSerialKnown(spend.getCoinSerialNumber())) {
+    //         //Tried to spend an already spent zGEA
+    //         receipt.SetStatus(_("The coin spend has been used"), ZGEA_SPENT_USED_ZGEA);
+    // 
+    //         uint256 hashSerial = GetSerialHash(spend.getCoinSerialNumber());
+    //         if (!zgeaTracker->HasSerialHash(hashSerial))
+    //             return error("%s: serialhash %s not found in tracker", __func__, hashSerial.GetHex());
+    // 
+    //         CMintMeta meta = zgeaTracker->Get(hashSerial);
+    //         meta.isUsed = true;
+    //         if (!zgeaTracker->UpdateState(meta))
+    //             LogPrintf("%s: failed to write zerocoinmint\n", __func__);
+    // 
+    //         pwalletMain->NotifyZerocoinChanged(pwalletMain, zerocoinSelected.GetValue().GetHex(), "Used", CT_UPDATED);
+    //         return false;
+    //     }
+    // 
+    //     uint32_t nAccumulatorChecksum = GetChecksum(accumulator.getValue());
+    //     CZerocoinSpend zcSpend(spend.getCoinSerialNumber(), 0, zerocoinSelected.GetValue(), zerocoinSelected.GetDenomination(), nAccumulatorChecksum);
+    //     zcSpend.SetMintCount(nMintsAdded);
+    //     receipt.AddSpend(zcSpend);
+    // } catch (const std::exception&) {
+    //     receipt.SetStatus(_("CoinSpend: Accumulator witness does not verify"), ZGEA_INVALID_WITNESS);
+    //     return false;
+    // }
+    // 
+    // receipt.SetStatus(_("Spend Valid"), ZGEA_SPEND_OKAY); // Everything okay
+    // 
+    // return true;
+    // **** Zero Disable End ****
+    
+    return error("%s: Zerocoin is disabled", __func__);
 }
 
 bool CWallet::CreateZerocoinSpendTransaction(CAmount nValue, int nSecurityLevel, CWalletTx& wtxNew, CReserveKey& reserveKey, CZerocoinSpendReceipt& receipt, vector<CZerocoinMint>& vSelectedMints, vector<CDeterministicMint>& vNewMints, bool fMintChange,  bool fMinimizeChange, CBitcoinAddress* address)
@@ -4761,18 +4780,8 @@ bool CWallet::CreateZerocoinSpendTransaction(CAmount nValue, int nSecurityLevel,
             vSelectedMints.emplace_back(mint);
         }
     } else {
-        unsigned int mintsCount = 0;
-        for (const CZerocoinMint& mint : vSelectedMints) {
-            if (nValueSelected < nValue) {
-                nValueSelected += ZerocoinDenominationToAmount(mint.GetDenomination());
-                mintsCount ++;
-            }
-            else
-                break;
-        }
-        if (mintsCount < vSelectedMints.size()) {
-            vSelectedMints.resize(mintsCount);
-        }
+        for (const CZerocoinMint mint : vSelectedMints)
+            nValueSelected += ZerocoinDenominationToAmount(mint.GetDenomination());
     }
 
     int nArchived = 0;

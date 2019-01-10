@@ -7,7 +7,7 @@ architectures:
 packages:
 - "faketime"
 remotes:
-- "url": "https://github.com/gea-project/gea-detached-sigs.git"
+- "url": "https://github.com/gea-actual/gea-detached-sigs.git"
   "dir": "signature"
 files:
 - "gea-osx-unsigned.tar.gz"

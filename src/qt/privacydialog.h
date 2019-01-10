@@ -1,4 +1,4 @@
-// Copyright (c) 2017-2018 The GEA developers
+// Copyright (c) 2017-2018 The PIVX developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -73,7 +73,6 @@ private:
     
     int nSecurityLevel = 0;
     bool fMinimizeChange = false;
-    bool fDenomsMinimized;
 
     int nDisplayUnit;
     bool updateLabel(const QString& address);
@@ -102,10 +101,7 @@ private slots:
     void on_pushButtonSpentReset_clicked();
     void on_pushButtonSpendzGEA_clicked();
     void on_pushButtonZGeaControl_clicked();
-    void on_pushButtonHideDenoms_clicked();
-    void on_pushButtonShowDenoms_clicked();
     void on_pasteButton_clicked();
-    void minimizeDenomsSection(bool fMinimize);
     void updateDisplayUnit();
     void updateAutomintStatus();
     void updateSPORK16Status();

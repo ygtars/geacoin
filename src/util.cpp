@@ -1,7 +1,7 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2018 The GEA developers
+// Copyright (c) 2015-2018 The PIVX developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -24,6 +24,7 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <openssl/bio.h>
 #include <openssl/buffer.h>
+#include <openssl/crypto.h> // for OPENSSL_cleanse()
 #include <openssl/evp.h>
 
 
@@ -114,12 +115,12 @@ bool fLiteMode = false;
 bool fEnableSwiftTX = true;
 int nSwiftTXDepth = 5;
 // Automatic Zerocoin minting
-bool fEnableZeromint = true;
-int nZeromintPercentage = 10;
+bool fEnableZeromint = false;
+int nZeromintPercentage = 0;
 int nPreferredDenom = 0;
 const int64_t AUTOMINT_DELAY = (60 * 5); // Wait at least 5 minutes until Automint starts
 
-int nAnonymizeGeaxAmount = 1000;
+int nAnonymizeGEAAmount = 1000;
 int nLiquidityProvider = 0;
 /** Spork enforcement enabled time */
 int64_t enforceMasternodePaymentsTime = 4085657524;
@@ -244,6 +245,7 @@ bool LogAcceptCategory(const char* category)
                 ptrCategory->insert(string("mnpayments"));
                 ptrCategory->insert(string("zero"));
                 ptrCategory->insert(string("mnbudget"));
+                ptrCategory->insert(string("blockvalue"));
             }
         }
         const set<string>& setCategories = *ptrCategory.get();
@@ -423,13 +425,13 @@ void PrintExceptionContinue(std::exception* pex, const char* pszThread)
 boost::filesystem::path GetDefaultDataDir()
 {
     namespace fs = boost::filesystem;
-// Windows < Vista: C:\Documents and Settings\Username\Application Data\GEA
-// Windows >= Vista: C:\Users\Username\AppData\Roaming\GEA
-// Mac: ~/Library/Application Support/GEA
-// Unix: ~/.gea
+// Windows < Vista: C:\Documents and Settings\Username\Application Data\GEAcore
+// Windows >= Vista: C:\Users\Username\AppData\Roaming\GEAcore
+// Mac: ~/Library/Application Support/GEAcore
+// Unix: ~/.geacore
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "GEA";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / "GEAcore";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -441,10 +443,10 @@ boost::filesystem::path GetDefaultDataDir()
     // Mac
     pathRet /= "Library/Application Support";
     TryCreateDirectory(pathRet);
-    return pathRet / "GEA";
+    return pathRet / "GEAcore";
 #else
     // Unix
-    return pathRet / ".gea";
+    return pathRet / ".geacore";
 #endif
 #endif
 }

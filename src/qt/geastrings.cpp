@@ -192,9 +192,6 @@ QT_TRANSLATE_NOOP("gea-core", ""
 "the OpenSSL Toolkit <https://www.openssl.org/> and cryptographic software "
 "written by Eric Young and UPnP software written by Thomas Bernard."),
 QT_TRANSLATE_NOOP("gea-core", ""
-"Total length of network version string (%i) exceeds maximum length (%i). "
-"Reduce the number or size of uacomments."),
-QT_TRANSLATE_NOOP("gea-core", ""
 "Unable to bind to %s on this computer. GEA Core is probably already running."),
 QT_TRANSLATE_NOOP("gea-core", ""
 "Unable to locate enough Obfuscation denominated funds for this transaction."),
@@ -238,10 +235,10 @@ QT_TRANSLATE_NOOP("gea-core", ""
 QT_TRANSLATE_NOOP("gea-core", ""
 "You must specify a masternodeprivkey in the configuration. Please see "
 "documentation for help."),
-QT_TRANSLATE_NOOP("gea-core", "(51472 could be used only on mainnet)"),
+QT_TRANSLATE_NOOP("gea-core", "(9229 could be used only on mainnet)"),
 QT_TRANSLATE_NOOP("gea-core", "(default: %s)"),
 QT_TRANSLATE_NOOP("gea-core", "(default: 1)"),
-QT_TRANSLATE_NOOP("gea-core", "(must be 51472 for mainnet)"),
+QT_TRANSLATE_NOOP("gea-core", "(must be 9229 for mainnet)"),
 QT_TRANSLATE_NOOP("gea-core", "<category> can be:"),
 QT_TRANSLATE_NOOP("gea-core", "Accept command line and JSON-RPC commands"),
 QT_TRANSLATE_NOOP("gea-core", "Accept connections from outside (default: 1 if no -proxy or -connect)"),
@@ -250,7 +247,6 @@ QT_TRANSLATE_NOOP("gea-core", "Add a node to connect to and attempt to keep the 
 QT_TRANSLATE_NOOP("gea-core", "Allow DNS lookups for -addnode, -seednode and -connect"),
 QT_TRANSLATE_NOOP("gea-core", "Already have that input."),
 QT_TRANSLATE_NOOP("gea-core", "Always query for peer addresses via DNS lookup (default: %u)"),
-QT_TRANSLATE_NOOP("gea-core", "Append comment to the user agent string"),
 QT_TRANSLATE_NOOP("gea-core", "Attempt to force blockchain corruption recovery"),
 QT_TRANSLATE_NOOP("gea-core", "Attempt to recover private keys from a corrupt wallet.dat"),
 QT_TRANSLATE_NOOP("gea-core", "Automatically create Tor hidden service (default: %d)"),
@@ -502,7 +498,6 @@ QT_TRANSLATE_NOOP("gea-core", "Use UPnP to map the listening port (default: %u)"
 QT_TRANSLATE_NOOP("gea-core", "Use UPnP to map the listening port (default: 1 when listening)"),
 QT_TRANSLATE_NOOP("gea-core", "Use a custom max chain reorganization depth (default: %u)"),
 QT_TRANSLATE_NOOP("gea-core", "Use the test network"),
-QT_TRANSLATE_NOOP("gea-core", "User Agent comment (%s) contains unsafe characters."),
 QT_TRANSLATE_NOOP("gea-core", "Username for JSON-RPC connections"),
 QT_TRANSLATE_NOOP("gea-core", "Value is below the smallest available denomination (= 1) of zGEA"),
 QT_TRANSLATE_NOOP("gea-core", "Value more than Obfuscation pool maximum allows."),

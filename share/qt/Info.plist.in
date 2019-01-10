@@ -38,7 +38,7 @@
   <true/>
 
   <key>CFBundleIdentifier</key>
-  <string>io.gea.Geax-Qt</string>
+  <string>io.gea.GEA-Qt</string>
 
   <key>CFBundleURLTypes</key>
   <array>
@@ -46,7 +46,7 @@
       <key>CFBundleTypeRole</key>
       <string>Editor</string>
       <key>CFBundleURLName</key>
-      <string>io.gea.GeaxPayment</string>
+      <string>io.gea.GEAPayment</string>
       <key>CFBundleURLSchemes</key>
       <array>
         <string>gea</string>
@@ -60,7 +60,7 @@
       <key>UTTypeIdentifier</key>
       <string>io.gea.paymentrequest</string>
       <key>UTTypeDescription</key>
-      <string>Geax payment request</string>
+      <string>GEA payment request</string>
       <key>UTTypeConformsTo</key>
       <array>
         <string>public.data</string>

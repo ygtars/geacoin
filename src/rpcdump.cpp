@@ -1,13 +1,13 @@
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2018 The GEA developers
+// Copyright (c) 2015-2018 The PIVX developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "bip38.h"
 #include "init.h"
 #include "main.h"
-#include "rpc/server.h"
+#include "rpcserver.h"
 #include "script/script.h"
 #include "script/standard.h"
 #include "sync.h"

@@ -2860,8 +2860,8 @@ Maximum autorisé:</translation>
         <translation>Aucune adresse 'Payer à' de fournie, création d'un paiement local</translation>
     </message>
     <message>
-        <source>Invalid Geax Address</source>
-        <translation>Adresse Geax incorrecte</translation>
+        <source>Invalid GEA Address</source>
+        <translation>Adresse GEA incorrecte</translation>
     </message>
     <message>
         <source>Invalid Send Amount</source>

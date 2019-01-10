@@ -104,7 +104,7 @@
         <translation>&amp;Edit</translation>
     </message>
     <message>
-        <location line="+182"/>
+        <location line="+187"/>
         <source>Export Address List</source>
         <translation>Export Address List</translation>
     </message>
@@ -296,7 +296,7 @@
 <context>
     <name>BanTableModel</name>
     <message>
-        <location filename="../bantablemodel.cpp" line="+87"/>
+        <location filename="../bantablemodel.cpp" line="+89"/>
         <source>IP/Netmask</source>
         <translation type="unfinished"></translation>
     </message>
@@ -431,12 +431,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../bip38tooldialog.cpp" line="+29"/>
+        <location filename="../bip38tooldialog.cpp" line="+30"/>
         <source>Click &quot;Decrypt Key&quot; to compute key</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+89"/>
+        <location line="+90"/>
         <source>The entered passphrase is invalid. </source>
         <translation type="unfinished"></translation>
     </message>
@@ -516,7 +516,7 @@
 <context>
     <name>BitcoinGUI</name>
     <message>
-        <location filename="../bitcoingui.cpp" line="+122"/>
+        <location filename="../bitcoingui.cpp" line="+128"/>
         <source>Wallet</source>
         <translation>Wallet</translation>
     </message>
@@ -526,7 +526,7 @@
         <translation>Node</translation>
     </message>
     <message>
-        <location line="+174"/>
+        <location line="+180"/>
         <source>&amp;Overview</source>
         <translation>&amp;Overview</translation>
     </message>
@@ -571,12 +571,13 @@
         <translation>Quit application</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
+        <location line="+2"/>
         <source>About &amp;Qt</source>
         <translation>About &amp;Qt</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Show information about Qt</source>
         <translation>Show information about Qt</translation>
     </message>
@@ -829,13 +830,13 @@
         <translation>Tabs toolbar</translation>
     </message>
     <message>
-        <location line="-436"/>
-        <location line="+918"/>
+        <location line="-446"/>
+        <location line="+928"/>
         <source>GEA Core</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-722"/>
+        <location line="-726"/>
         <source>Send coins to a GEA address</source>
         <translation type="unfinished"></translation>
     </message>
@@ -870,7 +871,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+10"/>
         <source>Modify configuration options for GEA</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1282,7 +1283,7 @@ Address: %4
         <translation>Priority</translation>
     </message>
     <message>
-        <location filename="../coincontroldialog.cpp" line="+60"/>
+        <location filename="../coincontroldialog.cpp" line="+52"/>
         <source>Copy address</source>
         <translation>Copy address</translation>
     </message>
@@ -1348,12 +1349,12 @@ Address: %4
         <translation>Copy change</translation>
     </message>
     <message>
-        <location line="+147"/>
+        <location line="+163"/>
         <source>Please switch to &quot;List mode&quot; to use this function.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+216"/>
+        <location line="+220"/>
         <source>highest</source>
         <translation>highest</translation>
     </message>
@@ -1954,99 +1955,54 @@ MultiSend will not be activated unless you have clicked Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multisenddialog.cpp" line="+64"/>
+        <location filename="../multisenddialog.cpp" line="+68"/>
         <source>(no label)</source>
         <translation type="unfinished">(no label)</translation>
     </message>
     <message>
-        <location line="+11"/>
-        <source>MultiSend Active for Stakes and Masternode Rewards</source>
+        <location line="+44"/>
+        <source>The entered address:
+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>MultiSend Active for Stakes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>MultiSend Active for Masternode Rewards</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>MultiSend Not Active</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <source>The entered address: %1 is invalid.
+        <location line="+0"/>
+        <source> is invalid.
 Please check the address and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+11"/>
-        <source>The total amount of your MultiSend vector is over 100% of your stake reward</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+40"/>
-        <source>Saved the MultiSend to memory, but failed saving properties to the database.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>MultiSend Vector</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+21"/>
-        <source>Removed %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Could not locate address</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Unable to activate MultiSend, check MultiSend vector</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Need to select to send on stake and/or masternode rewards</source>
+        <source>The total amount of your MultiSend vector is over 100% of your stake reward
+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+7"/>
-        <source>MultiSend activated but writing settings to DB failed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>MultiSend activated</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>First Address Not Valid</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>MultiSend deactivated but writing settings to DB failed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>MultiSend deactivated</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-97"/>
         <source>Please Enter 1 - 100 for percent.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+33"/>
+        <source>Saved the MultiSend to memory, but failed saving properties to the database.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>MultiSend Vector
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>Removed </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Could not locate address
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2371,7 +2327,7 @@ Please be patient after clicking import.</source>
         <translation>Select payment request file</translation>
     </message>
     <message>
-        <location filename="../openuridialog.cpp" line="+45"/>
+        <location filename="../openuridialog.cpp" line="+47"/>
         <source>Select payment request file to open</source>
         <translation>Select payment request file to open</translation>
     </message>
@@ -2616,23 +2572,13 @@ https://www.transifex.com/gea-project/gea-project-translations</source>
         <translation>Decimal digits</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+12"/>
         <location line="+6"/>
         <source>Hide empty balances</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Hide orphan stakes in transaction lists</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Hide orphan stakes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+24"/>
+        <location line="+9"/>
         <location line="+13"/>
         <source>Third party URLs (e.g. a block explorer) that appear in the transactions tab as context menu items. %s in the URL is replaced by transaction hash. Multiple URLs are separated by vertical bar |.</source>
         <translation>Third party URLs (e.g. a block explorer) that appear in the transactions tab as context menu items. %s in the URL is replaced by transaction hash. Multiple URLs are separated by vertical bar |.</translation>
@@ -2678,12 +2624,12 @@ https://www.transifex.com/gea-project/gea-project-translations</source>
         <translation>default</translation>
     </message>
     <message>
-        <location line="+46"/>
+        <location line="+55"/>
         <source>none</source>
         <translation>none</translation>
     </message>
     <message>
-        <location line="+96"/>
+        <location line="+92"/>
         <source>Confirm options reset</source>
         <translation>Confirm options reset</translation>
     </message>
@@ -2704,7 +2650,7 @@ https://www.transifex.com/gea-project/gea-project-translations</source>
         <translation>This change would require a client restart.</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+22"/>
         <source>The supplied proxy address is invalid.</source>
         <translation>The supplied proxy address is invalid.</translation>
     </message>
@@ -2888,13 +2834,13 @@ Immature: confirmed, but less than 1 mint of the same denomination after it was 
         <translation>Recent transactions</translation>
     </message>
     <message>
-        <location filename="../overviewpage.cpp" line="+132"/>
+        <location filename="../overviewpage.cpp" line="+149"/>
         <location line="+1"/>
         <source>out of sync</source>
         <translation>out of sync</translation>
     </message>
     <message>
-        <location line="+111"/>
+        <location line="+106"/>
         <source>Current percentage of zGEA.
 If AutoMint is enabled this percentage will settle around the configured AutoMint percentage (default = 10%).
 </source>
@@ -2920,8 +2866,8 @@ To enable AutoMint change &apos;enablezeromint=0&apos; to &apos;enablezeromint=1
 <context>
     <name>PaymentServer</name>
     <message>
-        <location filename="../paymentserver.cpp" line="+292"/>
-        <location line="+205"/>
+        <location filename="../paymentserver.cpp" line="+297"/>
+        <location line="+209"/>
         <location line="+33"/>
         <location line="+104"/>
         <location line="+12"/>
@@ -2952,12 +2898,12 @@ To enable AutoMint change &apos;enablezeromint=0&apos; to &apos;enablezeromint=1
         <translation>Invalid payment address %1</translation>
     </message>
     <message>
-        <location line="-104"/>
+        <location line="-108"/>
         <source>Cannot start gea: click-to-pay handler</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+110"/>
+        <location line="+114"/>
         <source>URI cannot be parsed! This can be caused by an invalid GEA address or malformed URI parameters.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3042,7 +2988,7 @@ To enable AutoMint change &apos;enablezeromint=0&apos; to &apos;enablezeromint=1
 <context>
     <name>PeerTableModel</name>
     <message>
-        <location filename="../peertablemodel.cpp" line="+114"/>
+        <location filename="../peertablemodel.cpp" line="+115"/>
         <source>Address/Hostname</source>
         <translation>Address/Hostname</translation>
     </message>
@@ -3070,9 +3016,9 @@ To enable AutoMint change &apos;enablezeromint=0&apos; to &apos;enablezeromint=1
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+190"/>
-        <location filename="../privacydialog.cpp" line="+172"/>
-        <location line="+112"/>
+        <location line="+64"/>
+        <location filename="../privacydialog.cpp" line="+163"/>
+        <location line="+111"/>
         <source>Mint Zerocoin</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3145,12 +3091,12 @@ To enable AutoMint change &apos;enablezeromint=0&apos; to &apos;enablezeromint=1
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-600"/>
+        <location line="-474"/>
         <source>PRIVACY</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+308"/>
+        <location line="+182"/>
         <location line="+52"/>
         <source>Enter an amount of Gea to convert to zGEA</source>
         <translation type="unfinished"></translation>
@@ -3172,13 +3118,13 @@ To enable AutoMint change &apos;enablezeromint=0&apos; to &apos;enablezeromint=1
     </message>
     <message>
         <location line="+37"/>
-        <location filename="../privacydialog.cpp" line="+563"/>
+        <location filename="../privacydialog.cpp" line="+537"/>
         <source>Spend Zerocoin. Without &apos;Pay To:&apos; address creates payments to yourself.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../privacydialog.cpp" line="-514"/>
+        <location filename="../privacydialog.cpp" line="-488"/>
         <location line="+4"/>
         <location line="+12"/>
         <location line="+84"/>
@@ -3206,9 +3152,7 @@ zGEA are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-548"/>
-        <location line="+49"/>
-        <location line="+504"/>
+        <location line="+5"/>
         <location line="+421"/>
         <location line="+544"/>
         <location line="+31"/>
@@ -3308,16 +3252,13 @@ zGEA are mature when they have more than 20 confirmations AND more than 2 mints 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-893"/>
-        <location line="+25"/>
-        <location line="+936"/>
+        <location line="+68"/>
         <location line="+38"/>
         <source>Total Balance including unconfirmed and immature zGEA</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-996"/>
-        <location line="+961"/>
+        <location line="-35"/>
         <source>Total Zerocoin  Balance:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3364,8 +3305,7 @@ To change the percentage (no restart required):
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1410"/>
-        <location line="+1459"/>
+        <location line="+49"/>
         <source>Global Supply:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3422,17 +3362,7 @@ To change the percentage (no restart required):
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1324"/>
-        <source>Show zGEA denominations list</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Show Denominations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+967"/>
+        <location line="-354"/>
         <source>Denominations with value 5:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3502,12 +3432,7 @@ To change the percentage (no restart required):
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+443"/>
-        <source>Hide Denominations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+147"/>
+        <location line="+553"/>
         <source>Priority:</source>
         <translation type="unfinished">Priority:</translation>
     </message>
@@ -3543,9 +3468,9 @@ To change the percentage (no restart required):
     </message>
     <message>
         <location line="+75"/>
-        <location filename="../privacydialog.cpp" line="-438"/>
+        <location filename="../privacydialog.cpp" line="-429"/>
         <location line="+1"/>
-        <location line="+545"/>
+        <location line="+536"/>
         <location line="+1"/>
         <source>Coins automatically selected</source>
         <translation type="unfinished"></translation>
@@ -3581,18 +3506,18 @@ To change the percentage (no restart required):
         <translation type="unfinished">Change:</translation>
     </message>
     <message>
-        <location filename="../privacydialog.cpp" line="-545"/>
+        <location filename="../privacydialog.cpp" line="-536"/>
         <source>out of sync</source>
         <translation type="unfinished">out of sync</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+129"/>
+        <location line="+121"/>
         <source>Mint Status: Okay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-123"/>
+        <location line="-115"/>
         <source>Copy quantity</source>
         <translation type="unfinished">Copy quantity</translation>
     </message>
@@ -3602,13 +3527,13 @@ To change the percentage (no restart required):
         <translation type="unfinished">Copy amount</translation>
     </message>
     <message>
-        <location line="+192"/>
+        <location line="+184"/>
         <source>Starting ResetMintZerocoin: rescanning complete blockchain, this will need up to 30 minutes depending on your hardware.
 Please be patient...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+171"/>
+        <location line="+170"/>
         <source>Spending Zerocoin.
 Computationally expensive, might need several minutes depending on the selected Security Level and your hardware.
 Please be patient...</source>
@@ -3631,7 +3556,7 @@ Maximum allowed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+293"/>
+        <location line="+267"/>
         <source> &lt;b&gt;enabled&lt;/b&gt;.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3652,13 +3577,13 @@ Maximum allowed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-666"/>
-        <location line="+112"/>
+        <location line="-639"/>
+        <location line="+111"/>
         <source>zGEA is currently undergoing maintenance.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-221"/>
+        <location line="-212"/>
         <source>Denom. with value &lt;b&gt;1&lt;/b&gt;:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3699,12 +3624,12 @@ Maximum allowed: </source>
     </message>
     <message>
         <location line="+3"/>
-        <location line="+740"/>
+        <location line="+705"/>
         <source>AutoMint Status:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-737"/>
+        <location line="-702"/>
         <source>Denom. &lt;b&gt;1&lt;/b&gt;:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3744,7 +3669,7 @@ Maximum allowed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+103"/>
+        <location line="+95"/>
         <source>Error: Your wallet is locked. Please enter the wallet passphrase first.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3776,14 +3701,14 @@ Maximum allowed: </source>
     </message>
     <message>
         <location line="+35"/>
-        <location line="+15"/>
+        <location line="+14"/>
         <location line="+260"/>
         <source>Duration: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-275"/>
-        <location line="+15"/>
+        <location line="-274"/>
+        <location line="+14"/>
         <location line="+260"/>
         <source> sec.
 </source>
@@ -3801,7 +3726,7 @@ Maximum allowed: </source>
     </message>
     <message>
         <location line="+4"/>
-        <source>Invalid Geax Address</source>
+        <source>Invalid GEA Address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3874,7 +3799,7 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location line="+362"/>
+        <location line="+336"/>
         <source>PrivacyDialog</source>
         <comment>Enter an amount of GEA to convert to zGEA</comment>
         <translation type="unfinished">
@@ -3883,7 +3808,7 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         </translation>
     </message>
     <message>
-        <location line="-334"/>
+        <location line="-308"/>
         <source>denomination: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -3931,12 +3856,12 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation>Amount</translation>
     </message>
     <message>
-        <location filename="../guiutil.cpp" line="+105"/>
+        <location filename="../guiutil.cpp" line="+113"/>
         <source>Enter a GEA address (e.g. %1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+773"/>
+        <location line="+789"/>
         <source>%1 d</source>
         <translation>%1 d</translation>
     </message>
@@ -3990,7 +3915,7 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
 <context>
     <name>QRImageWidget</name>
     <message>
-        <location filename="../receiverequestdialog.cpp" line="+33"/>
+        <location filename="../receiverequestdialog.cpp" line="+36"/>
         <source>&amp;Save Image...</source>
         <translation>&amp;Save Image...</translation>
     </message>
@@ -4190,8 +4115,8 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
     </message>
     <message>
         <location line="+59"/>
-        <location filename="../rpcconsole.cpp" line="+329"/>
-        <location line="+727"/>
+        <location filename="../rpcconsole.cpp" line="+331"/>
+        <location line="+717"/>
         <source>Select a peer to view detailed information.</source>
         <translation>Select a peer to view detailed information.</translation>
     </message>
@@ -4406,12 +4331,12 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation>Out:</translation>
     </message>
     <message>
-        <location line="-39"/>
+        <location line="-36"/>
         <source>Welcome to the GEA RPC console.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-218"/>
+        <location line="-211"/>
         <source>&amp;Disconnect Node</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4474,9 +4399,9 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+70"/>
-        <source>Use up and down arrows to navigate history, and %1 to clear screen.</source>
-        <translation type="unfinished"></translation>
+        <location line="+63"/>
+        <source>Use up and down arrows to navigate history, and &lt;b&gt;Ctrl-L&lt;/b&gt; to clear screen.</source>
+        <translation>Use up and down arrows to navigate history, and &lt;b&gt;Ctrl-L&lt;/b&gt; to clear screen.</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -4484,12 +4409,7 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation>Type &lt;b&gt;help&lt;/b&gt; for an overview of available commands.</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source>WARNING: Scammers have been active, telling users to type commands here, stealing their wallet contents. Do not use this console without fully understanding the ramifications of a command.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+141"/>
+        <location line="+140"/>
         <source>%1 B</source>
         <translation>%1 B</translation>
     </message>
@@ -4554,7 +4474,7 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
 <context>
     <name>ReceiveCoinsDialog</name>
     <message>
-        <location filename="../forms/receivecoinsdialog.ui" line="+263"/>
+        <location filename="../forms/receivecoinsdialog.ui" line="+142"/>
         <source>Reuse one of the previously used receiving addresses.&lt;br&gt;Reusing addresses has security and privacy issues.&lt;br&gt;Do not use this unless re-generating a payment request made before.</source>
         <translation>Reuse one of the previously used receiving addresses.&lt;br&gt;Reusing addresses has security and privacy issues.&lt;br&gt;Do not use this unless re-generating a payment request made before.</translation>
     </message>
@@ -4564,49 +4484,33 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation>R&amp;euse an existing receiving address (not recommended)</translation>
     </message>
     <message>
-        <location line="-30"/>
+        <location line="+17"/>
         <source>&amp;Message:</source>
         <translation>&amp;Message:</translation>
     </message>
     <message>
-        <location line="-87"/>
-        <location line="+16"/>
+        <location line="+13"/>
+        <location line="+21"/>
         <source>An optional label to associate with the new receiving address.</source>
         <translation>An optional label to associate with the new receiving address.</translation>
     </message>
     <message>
-        <location line="+7"/>
-        <location line="+25"/>
-        <source>Your receiving address. You can copy and use it to receive coins on this wallet. A new one will be generated once it is used.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-22"/>
-        <source>&amp;Address:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+32"/>
-        <source>A&amp;mount:</source>
-        <translation type="unfinished">A&amp;mount:</translation>
-    </message>
-    <message>
-        <location line="+26"/>
+        <location line="-37"/>
         <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the GEA network.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-175"/>
+        <location line="-101"/>
         <source>RECEIVE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+191"/>
+        <location line="+124"/>
         <source>An optional message to attach to the payment request, which will be displayed when the request is opened.&lt;br&gt;Note: The message will not be sent with the payment over the GEA network.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-107"/>
+        <location line="+7"/>
         <source>Use this form to request payments. All fields are &lt;b&gt;optional&lt;/b&gt;.</source>
         <translation>Use this form to request payments. All fields are &lt;b&gt;optional&lt;/b&gt;.</translation>
     </message>
@@ -4616,13 +4520,18 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation>&amp;Label:</translation>
     </message>
     <message>
-        <location line="+52"/>
+        <location line="+13"/>
         <location line="+22"/>
         <source>An optional amount to request. Leave this empty or zero to not request a specific amount.</source>
         <translation>An optional amount to request. Leave this empty or zero to not request a specific amount.</translation>
     </message>
     <message>
-        <location line="+62"/>
+        <location line="-19"/>
+        <source>&amp;Amount:</source>
+        <translation>&amp;Amount:</translation>
+    </message>
+    <message>
+        <location line="+41"/>
         <source>&amp;Request payment</source>
         <translation>&amp;Request payment</translation>
     </message>
@@ -4637,12 +4546,7 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation>Clear</translation>
     </message>
     <message>
-        <location line="+27"/>
-        <source>Receiving Addresses</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+55"/>
+        <location line="+68"/>
         <source>Requested payments history</source>
         <translation>Requested payments history</translation>
     </message>
@@ -4667,7 +4571,7 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation>Remove</translation>
     </message>
     <message>
-        <location filename="../receivecoinsdialog.cpp" line="+41"/>
+        <location filename="../receivecoinsdialog.cpp" line="+39"/>
         <source>Copy label</source>
         <translation>Copy label</translation>
     </message>
@@ -4680,11 +4584,6 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <location line="+1"/>
         <source>Copy amount</source>
         <translation>Copy amount</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Copy address</source>
-        <translation type="unfinished">Copy address</translation>
     </message>
 </context>
 <context>
@@ -4773,22 +4672,17 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation>Message</translation>
     </message>
     <message>
-        <location line="+0"/>
-        <source>Address</source>
-        <translation type="unfinished">Address</translation>
-    </message>
-    <message>
-        <location line="+89"/>
+        <location line="+87"/>
         <source>Amount</source>
         <translation>Amount</translation>
     </message>
     <message>
-        <location line="-52"/>
+        <location line="-50"/>
         <source>(no label)</source>
         <translation>(no label)</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+6"/>
         <source>(no message)</source>
         <translation>(no message)</translation>
     </message>
@@ -4802,9 +4696,9 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
     <name>SendCoinsDialog</name>
     <message>
         <location filename="../forms/sendcoinsdialog.ui" line="+17"/>
-        <location filename="../sendcoinsdialog.cpp" line="+234"/>
+        <location filename="../sendcoinsdialog.cpp" line="+231"/>
         <location line="+25"/>
-        <location line="+413"/>
+        <location line="+396"/>
         <source>Send Coins</source>
         <translation>Send Coins</translation>
     </message>
@@ -4904,12 +4798,7 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+167"/>
-        <source>SwiftX technology allows for near instant transactions - A flat fee of 0.01 GEA applies</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+176"/>
+        <location line="+188"/>
         <source>Transaction Fee:</source>
         <translation>Transaction Fee:</translation>
     </message>
@@ -4949,22 +4838,22 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation>Custom:</translation>
     </message>
     <message>
-        <location line="-211"/>
+        <location line="+220"/>
         <source>(Smart fee not initialized yet. This usually takes a few blocks...)</source>
         <translation>(Smart fee not initialized yet. This usually takes a few blocks...)</translation>
     </message>
     <message>
-        <location line="-101"/>
+        <location line="+306"/>
         <source>SwiftX</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="-397"/>
         <source>Confirmation time:</source>
         <translation>Confirmation time:</translation>
     </message>
     <message>
-        <location line="-750"/>
+        <location line="-1029"/>
         <source>Open Coin Control...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4974,7 +4863,7 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1062"/>
+        <location line="+907"/>
         <source>If the custom fee is set to 1000 uGEAs and the transaction is only 250 bytes, then &quot;per kilobyte&quot; only pays 250 uGEAs in fee,&lt;br /&gt;while &quot;at least&quot; pays 1000 uGEAs. For transactions bigger than a kilobyte both pay by kilobyte.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4990,7 +4879,7 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-374"/>
+        <location line="+60"/>
         <source>normal</source>
         <translation>normal</translation>
     </message>
@@ -5000,12 +4889,12 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation>fast</translation>
     </message>
     <message>
-        <location line="+360"/>
+        <location line="-74"/>
         <source>Recommended</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+115"/>
+        <location line="+242"/>
         <source>Send as zero-fee transaction if possible</source>
         <translation>Send as zero-fee transaction if possible</translation>
     </message>
@@ -5050,12 +4939,12 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+23"/>
         <source>Balance:</source>
         <translation>Balance:</translation>
     </message>
     <message>
-        <location filename="../sendcoinsdialog.cpp" line="-590"/>
+        <location filename="../sendcoinsdialog.cpp" line="-570"/>
         <source>Copy quantity</source>
         <translation>Copy quantity</translation>
     </message>
@@ -5095,7 +4984,7 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation>Copy change</translation>
     </message>
     <message>
-        <location line="+146"/>
+        <location line="+143"/>
         <source>The split block tool does not work when sending to outside addresses. Try again.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5105,12 +4994,12 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+653"/>
+        <location line="+629"/>
         <source>Warning: Invalid GEA address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-615"/>
+        <location line="-591"/>
         <location line="+4"/>
         <location line="+4"/>
         <location line="+3"/>
@@ -5138,12 +5027,12 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation>Confirm send coins</translation>
     </message>
     <message>
-        <location line="+247"/>
+        <location line="+230"/>
         <source>A fee %1 times higher than %2 per kB is considered an insanely high fee.</source>
         <translation>A fee %1 times higher than %2 per kB is considered an insanely high fee.</translation>
     </message>
     <message numerus="yes">
-        <location line="+121"/>
+        <location line="+114"/>
         <source>Estimated to begin confirmation within %n block(s).</source>
         <translation>
             <numerusform>Estimated to begin confirmation within %n block.</numerusform>
@@ -5151,12 +5040,12 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         </translation>
     </message>
     <message>
-        <location line="-152"/>
+        <location line="-145"/>
         <source>The recipient address is not valid, please recheck.</source>
         <translation>The recipient address is not valid, please recheck.</translation>
     </message>
     <message>
-        <location line="-346"/>
+        <location line="-329"/>
         <source>using SwiftX</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5171,7 +5060,7 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation>&lt;b&gt;(%1 of %2 entries displayed)&lt;/b&gt;</translation>
     </message>
     <message>
-        <location line="+222"/>
+        <location line="+205"/>
         <source>The amount to pay must be larger than 0.</source>
         <translation>The amount to pay must be larger than 0.</translation>
     </message>
@@ -5211,17 +5100,12 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+86"/>
+        <location line="+84"/>
         <source>Pay only the minimum fee of %1</source>
         <translation>Pay only the minimum fee of %1</translation>
     </message>
     <message>
-        <location line="+13"/>
-        <source>Estimated to get 6 confirmations near instantly with &lt;b&gt;SwiftX&lt;/b&gt;!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+158"/>
+        <location line="+166"/>
         <source>Warning: Unknown change address</source>
         <translation>Warning: Unknown change address</translation>
     </message>
@@ -5325,7 +5209,7 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation>This is a verified payment request.</translation>
     </message>
     <message>
-        <location filename="../sendcoinsentry.cpp" line="+30"/>
+        <location filename="../sendcoinsentry.cpp" line="+31"/>
         <source>Enter a label for this address to add it to your address book</source>
         <translation>Enter a label for this address to add it to your address book</translation>
     </message>
@@ -5454,12 +5338,12 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation>Reset all verify message fields</translation>
     </message>
     <message>
-        <location filename="../signverifymessagedialog.cpp" line="+30"/>
+        <location filename="../signverifymessagedialog.cpp" line="+31"/>
         <source>Click &quot;Sign Message&quot; to generate signature</source>
         <translation>Click &quot;Sign Message&quot; to generate signature</translation>
     </message>
     <message>
-        <location line="+79"/>
+        <location line="+80"/>
         <location line="+73"/>
         <source>The entered address is invalid.</source>
         <translation>The entered address is invalid.</translation>
@@ -6025,7 +5909,7 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation>(n/a)</translation>
     </message>
     <message>
-        <location line="+211"/>
+        <location line="+204"/>
         <source>Transaction status. Hover over this field to show number of confirmations.</source>
         <translation>Transaction status. Hover over this field to show number of confirmations.</translation>
     </message>
@@ -6149,17 +6033,17 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation>Other</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>Enter address or label to search</source>
         <translation>Enter address or label to search</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+6"/>
         <source>Min amount</source>
         <translation>Min amount</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+36"/>
         <source>Copy address</source>
         <translation>Copy address</translation>
     </message>
@@ -6189,12 +6073,7 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation>Show transaction details</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Hide orphan stakes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+228"/>
+        <location line="+195"/>
         <source>Export Transaction History</source>
         <translation>Export Transaction History</translation>
     </message>
@@ -6254,7 +6133,7 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation>Exporting Successful</translation>
     </message>
     <message>
-        <location line="-310"/>
+        <location line="-280"/>
         <source>Received GEA from zGEA</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6264,7 +6143,7 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+307"/>
+        <location line="+277"/>
         <source>The transaction history was successfully saved to %1.</source>
         <translation>The transaction history was successfully saved to %1.</translation>
     </message>
@@ -6298,7 +6177,7 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
 <context>
     <name>WalletModel</name>
     <message>
-        <location filename="../walletmodel.cpp" line="+334"/>
+        <location filename="../walletmodel.cpp" line="+331"/>
         <location line="+9"/>
         <location line="+9"/>
         <source>Send Coins</source>
@@ -6632,11 +6511,6 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
     </message>
     <message>
         <location line="+4"/>
-        <source>Total length of network version string (%i) exceeds maximum length (%i). Reduce the number or size of uacomments.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
         <source>Unable to bind to %s on this computer. GEA Core is probably already running.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6712,8 +6586,8 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
     </message>
     <message>
         <location line="+3"/>
-        <source>(51472 could be used only on mainnet)</source>
-        <translation type="unfinished">(51472 could be used only on mainnet)</translation>
+        <source>(9229 could be used only on mainnet)</source>
+        <translation type="unfinished">(9229 could be used only on mainnet)</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -6727,7 +6601,7 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
     </message>
     <message>
         <location line="+1"/>
-        <source>(must be 51472 for mainnet)</source>
+        <source>(must be 9229 for mainnet)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6764,11 +6638,6 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <location line="+1"/>
         <source>Always query for peer addresses via DNS lookup (default: %u)</source>
         <translation type="unfinished">Always query for peer addresses via DNS lookup (default: %u)</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Append comment to the user agent string</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
@@ -7246,7 +7115,7 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-274"/>
+        <location line="-270"/>
         <source>This is a pre-release test build - use at your own risk - do not use for staking or merchant applications!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7328,12 +7197,12 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+61"/>
+        <location line="+58"/>
         <source>&lt;category&gt; can be:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+8"/>
         <source>Attempt to force blockchain corruption recovery</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7658,12 +7527,12 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <translation type="unfinished">Password for JSON-RPC connections</translation>
     </message>
     <message>
-        <location line="+122"/>
+        <location line="+121"/>
         <source>isValid(): Invalid -proxy address or hostname: &apos;%s&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-120"/>
+        <location line="-119"/>
         <source>Preparing for resync...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8116,11 +7985,6 @@ Either mint higher denominations (so fewer inputs are needed) or reduce the amou
         <location line="+1"/>
         <source>Use the test network</source>
         <translation type="unfinished">Use the test network</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>User Agent comment (%s) contains unsafe characters.</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>

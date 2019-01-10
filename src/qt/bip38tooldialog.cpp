@@ -1,4 +1,4 @@
-// Copyright (c) 2017-2018 The GEA developers
+// Copyright (c) 2017-2018 The PIVX developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -26,7 +26,9 @@ Bip38ToolDialog::Bip38ToolDialog(QWidget* parent) : QDialog(parent, Qt::WindowSy
 {
     ui->setupUi(this);
 
+#if QT_VERSION >= 0x040700
     ui->decryptedKeyOut_DEC->setPlaceholderText(tr("Click \"Decrypt Key\" to compute key"));
+#endif
 
     GUIUtil::setupAddressWidget(ui->addressIn_ENC, this);
     ui->addressIn_ENC->installEventFilter(this);

@@ -2220,7 +2220,7 @@ To enable AutoMint change 'enablezeromint=0' to 'enablezeromint=1' in gea.conf</
     </message>
     <message>
         <source>Cannot start gea: click-to-pay handler</source>
-        <translation>Geax başlatılamıyor: tıkla ve ödeme işleyicisi</translation>
+        <translation>GEA başlatılamıyor: tıkla ve ödeme işleyicisi</translation>
     </message>
     <message>
         <source>URI cannot be parsed! This can be caused by an invalid GEA address or malformed URI parameters.</source>
@@ -2705,8 +2705,8 @@ Maksimum bırakılan: </translation>
         <translation>Sağlanan 'Ödeme Yapmak İçin' adresi yok, yerel ödeme oluşturun</translation>
     </message>
     <message>
-        <source>Invalid Geax Address</source>
-        <translation>Geçersiz Geax Adresi</translation>
+        <source>Invalid GEA Address</source>
+        <translation>Geçersiz GEA Adresi</translation>
     </message>
     <message>
         <source>Invalid Send Amount</source>

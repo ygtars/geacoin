@@ -1,7 +1,7 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
-// Copyright (c) 2015-2018 The GEA developers
+// Copyright (c) 2015-2018 The PIVX developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -102,6 +102,10 @@ public:
 
     CBaseChainParams::Network NetworkID() const { return networkID; }
 
+    int64_t WalletForkBlock() const { return nWalletForkBlock; }
+    int64_t WalletForkDblBlock() const { return nWalletForkDblBlock; }
+    int64_t WalletForkResumeBlock() const { return nWalletForkResumeBlock; }
+
     /** Zerocoin **/
     std::string Zerocoin_Modulus() const { return zerocoinModulus; }
     libzerocoin::ZerocoinParams* Zerocoin_Params(bool useModulusV1) const;
@@ -116,6 +120,9 @@ public:
     /** Height or Time Based Activations **/
     int ModifierUpgradeBlock() const { return nModifierUpdateBlock; }
     int LAST_POW_BLOCK() const { return nLastPOWBlock; }
+    int DGW_POS_FORK_BLOCK() const {return nPOSDGWForkBlock;}
+    int64_t getPOSTargetSpacing() const {return nPOSTargetSpacing;}
+    const uint256& getPOSWorkLimit() const {return bnPOSWorkLimit;}
     int Zerocoin_StartHeight() const { return nZerocoinStartHeight; }
     int Zerocoin_Block_EnforceSerialRange() const { return nBlockEnforceSerialRange; }
     int Zerocoin_Block_RecalculateAccumulators() const { return nBlockRecalculateAccumulators; }
@@ -135,6 +142,7 @@ protected:
     std::vector<unsigned char> vAlertPubKey;
     int nDefaultPort;
     uint256 bnProofOfWorkLimit;
+    uint256 bnPOSWorkLimit;
     int nMaxReorganizationDepth;
     int nSubsidyHalvingInterval;
     int nEnforceBlockUpgradeMajority;
@@ -142,6 +150,8 @@ protected:
     int nToCheckBlockUpgradeMajority;
     int64_t nTargetTimespan;
     int64_t nTargetSpacing;
+    int64_t nPOSTargetSpacing;
+    int nPOSDGWForkBlock;
     int nLastPOWBlock;
     int nMasternodeCountDrift;
     int nMaturity;
@@ -181,6 +191,10 @@ protected:
     int nZerocoinStartHeight;
     int nZerocoinStartTime;
     int nZerocoinRequiredStakeDepth;
+
+    int nWalletForkBlock;
+    int nWalletForkDblBlock;
+    int nWalletForkResumeBlock;
 
     int nBlockEnforceSerialRange;
     int nBlockRecalculateAccumulators;

@@ -44,8 +44,8 @@ Instructions: Homebrew
 
 1. Clone the github tree to get the source code and go into the directory.
 
-        git clone https://github.com/GEA-Project/GEA.git
-        cd GEA
+        git clone https://github.com/gea-actual/gea-coin.git
+        cd gea-coin
 
 2.  Make the Homebrew OpenSSL headers visible to the configure script  (do ```brew info openssl``` to find out why this is necessary, or if you use Homebrew with installation folders different from the default).
 
@@ -86,7 +86,7 @@ Creating a release build
 ------------------------
 You can ignore this section if you are building `gead` for your own use.
 
-gead/gea-cli binaries are not included in the gea-Qt.app bundle.
+gead/gea-cli binaries are not included in the GEA-Qt.app bundle.
 
 If you are building `gead` or `gea-qt` for others, your build machine should be set up
 as follows for maximum compatibility:

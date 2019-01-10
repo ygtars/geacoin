@@ -1,4 +1,4 @@
-// Copyright (c) 2017-2018 The GEA developers
+// Copyright (c) 2017-2018 The PIVX developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -84,7 +84,7 @@ bool CheckBlockSignature(const CBlock& block)
     }
 
     if (!pubkey.IsValid())
-        return error("%s: invalid pubkey %s", __func__, HexStr(pubkey));
+        return error("%s: invalid pubkey %s", __func__, pubkey.GetHex());
 
     return pubkey.Verify(block.GetHash(), block.vchBlockSig);
 }

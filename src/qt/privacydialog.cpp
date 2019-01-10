@@ -1,4 +1,4 @@
-// Copyright (c) 2017-2018 The GEA developers
+// Copyright (c) 2017-2018 The PIVX developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -28,8 +28,7 @@
 PrivacyDialog::PrivacyDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint | Qt::WindowCloseButtonHint),
                                                           ui(new Ui::PrivacyDialog),
                                                           walletModel(0),
-                                                          currentBalance(-1),
-                                                          fDenomsMinimized(true)
+                                                          currentBalance(-1)
 {
     nDisplayUnit = 0; // just make sure it's not unitialized
     ui->setupUi(this);
@@ -100,7 +99,6 @@ PrivacyDialog::PrivacyDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystem
     else{
         fMinimizeChange = settings.value("fMinimizeChange").toBool();
     }
-
     ui->checkBoxMinimizeChange->setChecked(fMinimizeChange);
 
     // Start with displaying the "out of sync" warnings
@@ -112,17 +110,10 @@ PrivacyDialog::PrivacyDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystem
 
     // Set labels/buttons depending on SPORK_16 status
     updateSPORK16Status();
-
-    // init Denoms section
-    if(!settings.contains("fDenomsSectionMinimized"))
-        settings.setValue("fDenomsSectionMinimized", true);
-    minimizeDenomsSection(settings.value("fDenomsSectionMinimized").toBool());
 }
 
 PrivacyDialog::~PrivacyDialog()
 {
-    QSettings settings;
-    settings.setValue("fDenomsSectionMinimized", fDenomsMinimized);
     delete ui;
 }
 
@@ -259,7 +250,6 @@ void PrivacyDialog::on_pushButtonMintReset_clicked()
     return;
 }
 
-
 void PrivacyDialog::on_pushButtonSpentReset_clicked()
 {
     ui->TEMintStatus->setPlainText(tr("Starting ResetSpentZerocoin: "));
@@ -334,7 +324,7 @@ void PrivacyDialog::sendzGEA()
     }
     else{
         if (!address.IsValid()) {
-            QMessageBox::warning(this, tr("Spend Zerocoin"), tr("Invalid Geax Address"), QMessageBox::Ok, QMessageBox::Ok);
+            QMessageBox::warning(this, tr("Spend Zerocoin"), tr("Invalid GEA Address"), QMessageBox::Ok, QMessageBox::Ok);
             ui->payTo->setFocus();
             return;
         }
@@ -590,29 +580,6 @@ void PrivacyDialog::coinControlUpdateLabels()
     }
 }
 
-
-void PrivacyDialog::on_pushButtonShowDenoms_clicked()
-{
-    minimizeDenomsSection(false);
-}
-
-void PrivacyDialog::on_pushButtonHideDenoms_clicked()
-{
-    minimizeDenomsSection(true);
-}
-
-void PrivacyDialog::minimizeDenomsSection(bool fMinimize)
-{
-    if (fMinimize) {
-        ui->balanceSupplyFrame->show();
-        ui->verticalFrameRight->hide();
-    } else {
-        ui->balanceSupplyFrame->hide();
-        ui->verticalFrameRight->show();
-    }
-    fDenomsMinimized = fMinimize;
-}
-
 bool PrivacyDialog::updateLabel(const QString& address)
 {
     if (!walletModel)
@@ -734,7 +701,6 @@ void PrivacyDialog::setBalance(const CAmount& balance, const CAmount& unconfirme
 
     ui->labelzAvailableAmount->setText(QString::number(zerocoinBalance/COIN) + QString(" zGEA "));
     ui->labelzAvailableAmount_2->setText(QString::number(matureZerocoinBalance/COIN) + QString(" zGEA "));
-    ui->labelzAvailableAmount_4->setText(QString::number(zerocoinBalance/COIN) + QString(" zGEA "));
     ui->labelzGEAAmountValue->setText(BitcoinUnits::floorHtmlWithUnit(nDisplayUnit, balance - immatureBalance - nLockedBalance, false, BitcoinUnits::separatorAlways));
 
     // Display AutoMint status
@@ -745,8 +711,6 @@ void PrivacyDialog::setBalance(const CAmount& balance, const CAmount& unconfirme
 
     // Display global supply
     ui->labelZsupplyAmount->setText(QString::number(chainActive.Tip()->GetZerocoinSupply()/COIN) + QString(" <b>zGEA </b> "));
-    ui->labelZsupplyAmount_2->setText(QString::number(chainActive.Tip()->GetZerocoinSupply()/COIN) + QString(" <b>zGEA </b> "));
-
     for (auto denom : libzerocoin::zerocoinDenomList) {
         int64_t nSupply = chainActive.Tip()->mapZerocoinSupply.at(denom);
         QString strSupply = QString::number(nSupply) + " x " + QString::number(denom) + " = <b>" +

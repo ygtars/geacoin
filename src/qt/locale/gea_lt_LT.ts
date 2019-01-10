@@ -255,7 +255,7 @@
     </message>
     <message>
         <source>Enter a GEA Address that you would like to encrypt using BIP 38. Enter a passphrase in the middle box. Press encrypt to compute the encrypted private key.</source>
-        <translation>Įveskite Geax adresą, kurį norėtumėte užšifruoti naudojant BIP 38. Vidiniame laukelyje įrašykite slaptą frazę. Paspauskite užšifruoti, jei norite gauti užšifruotą privatųjį raktą.</translation>
+        <translation>Įveskite GEA adresą, kurį norėtumėte užšifruoti naudojant BIP 38. Vidiniame laukelyje įrašykite slaptą frazę. Paspauskite užšifruoti, jei norite gauti užšifruotą privatųjį raktą.</translation>
     </message>
     <message>
         <source>The GEA address to encrypt</source>
@@ -2604,8 +2604,8 @@ Nesubrendusios: patvirtintos, bet mažiau nei 1 konvertacijos tos pačio nominal
         <translation>Klaida: jūsų piniginė užrakinta. Pirmiausia įveskite piniginės slaptažodį.</translation>
     </message>
     <message>
-        <source>Invalid Geax Address</source>
-        <translation>Netinkamas Geax Adresas</translation>
+        <source>Invalid GEA Address</source>
+        <translation>Netinkamas GEA Adresas</translation>
     </message>
     <message>
         <source>Invalid Send Amount</source>

@@ -2004,8 +2004,8 @@ Nematura: konfirmita, sed malpli ol 1 minto el la samo nomado post ĝin estis mi
         <translation>Mesaĝo: eniri kvanto &gt; 0.</translation>
     </message>
     <message>
-        <source>Invalid Geax Address</source>
-        <translation>Nevalida Geax adreso</translation>
+        <source>Invalid GEA Address</source>
+        <translation>Nevalida GEA adreso</translation>
     </message>
     <message>
         <source>Confirm send coins</source>
