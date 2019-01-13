@@ -53,11 +53,11 @@ static void convertSeed6(std::vector<CAddress>& vSeedsOut, const SeedSpec6* data
 // + Contains no strange transactions
 static Checkpoints::MapCheckpoints mapCheckpoints =
     boost::assign::map_list_of
-      (0, uint256("0x000002b60d27876d55d38813cd077583ab440cbccd44136fad8abec602093323"));
+      (0, uint256("0x0000035577e169097dcbed1e3dbb1c6c273e0a7968161dbf9133c6be6dc740d3"));
 
 static const Checkpoints::CCheckpointData data = {
     &mapCheckpoints,
-    1547139876, // * UNIX timestamp of last checkpoint block
+    1540718541, // * UNIX timestamp of last checkpoint block
     0,      // * total number of transactions between genesis and last checkpoint
                 //   (the tx=... number in the SetBestChain debug.log lines)
     2000        // * estimated number of transactions per day after checkpoint
@@ -117,7 +117,7 @@ public:
         pchMessageStart[1] = 0xc2;
         pchMessageStart[2] = 0xd1;
         pchMessageStart[3] = 0xe6;
-        vAlertPubKey = ParseHex("0486bce1bac0d543f104cbff2bd23680056a3b9ea05e1137d2ff90eeb5e08472eb500322593a2cb06fbf8297d7beb6cd30cb90f98153b5b7cce1493749e41e0284");
+        vAlertPubKey = ParseHex("04f5a8143f86ad8ac63791fbbdb8e0b91a8da88c8c693a95f6c2c13c063ea790f7960b8025a9047a7bc671d5cfe707a2dd2e13b86182e1064a0eea7bf863636363");
         nDefaultPort = 12244;
         bnProofOfWorkLimit = ~uint256(0) >> 20; // GEA starting difficulty is 1 / 2^20
         bnPOSWorkLimit = ~uint256(0) >> 24; // GEA max POS difficulty is 1 / 2^24
@@ -155,24 +155,24 @@ public:
         nEnforceNewSporkKey = 1632109087; //!> Sporks signed after (GMT): Tuesday, May 1, 2018 7:00:00 AM GMT must use the new spork key
         nRejectOldSporkKey = 1632109087; //!> Fully reject old spork key after (GMT): Friday, June 1, 2018 12:00:00 AM
 
-        const char* pszTimestamp = "GEA COIN";
+        const char* pszTimestamp = "GEA chain is alive";
         CMutableTransaction txNew;
         txNew.vin.resize(1);
         txNew.vout.resize(1);
         txNew.vin[0].scriptSig = CScript() << 486604799 << CScriptNum(4) << vector<unsigned char>((const unsigned char*)pszTimestamp, (const unsigned char*)pszTimestamp + strlen(pszTimestamp));
         txNew.vout[0].nValue = 0 * COIN;
-        txNew.vout[0].scriptPubKey = CScript() << ParseHex("0486bce1bac0d543f104cbff2bd23680056a3b9ea05e1137d2ff90eeb5e08472eb500322593a2cb06fbf8297d7beb6cd30cb90f98153b5b7cce1493749e41e0284") << OP_CHECKSIG;
+        txNew.vout[0].scriptPubKey = CScript() << ParseHex("04f5a8143f86ad8ac63791fbbdb8e0b91a8da88c8c693a95f6c2c13c063ea790f7960b8025a9047a7bc671d5cfe707a2dd2e13b86182e1064a0eea7bf863636363") << OP_CHECKSIG;
         genesis.vtx.push_back(txNew);
         genesis.hashPrevBlock = 0;
         genesis.hashMerkleRoot = genesis.BuildMerkleTree();
         genesis.nVersion = 1;
-        genesis.nTime = 1547139876;
+        genesis.nTime = 1540718541;
         genesis.nBits = bnProofOfWorkLimit.GetCompact();
-        genesis.nNonce = 1505;
+        genesis.nNonce = 21927229;
 
         hashGenesisBlock = genesis.GetHash();
-        assert(hashGenesisBlock == uint256("0x000002b60d27876d55d38813cd077583ab440cbccd44136fad8abec602093323"));
-        assert(genesis.hashMerkleRoot == uint256("0xeb95df2b34ed9a9f5e614c239287dbe2e5bed50ff60d1e6dcdf343e7f8033913"));
+        assert(hashGenesisBlock == uint256("0x0000035577e169097dcbed1e3dbb1c6c273e0a7968161dbf9133c6be6dc740d3"));
+        assert(genesis.hashMerkleRoot == uint256("0x880c2ae1019cd66442ee835aecf79f654f1b265304d43aecb45b349eccc151f2"));
 
         vSeeds.push_back(CDNSSeedData("Seed1", "seed1.geacoin.io"));
         vSeeds.push_back(CDNSSeedData("Seed2", "seed2.geacoin.io"));
